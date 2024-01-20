@@ -115,6 +115,8 @@ function submitForm() {
     if (formSubmitted) {
         console.log('walidacja ok');
 
+        generateBracket();
+
         var bracketSection = document.querySelector('.bracket-section');
         bracketSection.style.display = 'block';
 
@@ -124,15 +126,74 @@ function submitForm() {
     }
 }
 
+//generate bracket
+function generateBracket() {
+    var bracketContainer = document.querySelector('.bracket-section');
+    var participantsArray = document.getElementById('participantList').value.split(',').map(function (participant) {
+        return participant.trim();
+    });
+
+    // clear bracket
+    bracketContainer.innerHTML = '';
+
+    var roundsCount = Math.ceil(Math.log2(participantsArray.length));
+
+    // generate bracket for each round
+    for (var round = 1; round <= roundsCount; round++) {
+        var roundContainer = document.createElement('div');
+        roundContainer.classList.add('round');
+        roundContainer.innerHTML = '<h3>Round ' + round + '</h3>';
+
+        var numberOfTeams = participantsArray.length / Math.pow(2, round - 1);
+
+        for (var i = 0; i < numberOfTeams; i += 2) {
+            var matchContainer = document.createElement('div');
+            matchContainer.classList.add('bracket-container', 'match');
+
+            var team1 = participantsArray[i];
+            var team2 = participantsArray[i + 1];
+
+            matchContainer.innerHTML = `
+                <div class="player">
+                    <label>
+                        ${team1}<input type="checkbox" name="selectedTeams" value="${team1}">
+                    </label>
+                </div>
+                <div class="divider"></div>
+                <div class="player">
+                    <label>
+                        ${team2}<input type="checkbox" name="selectedTeams" value="${team2}">
+                    </label>
+                </div>
+            `;
+
+            roundContainer.appendChild(matchContainer);
+        }
+
+        bracketContainer.appendChild(roundContainer);
+    }
+}
+
+function isPowerOfTwo(number) {
+    return (number & (number - 1)) === 0;
+}
+
+// Event listener for checkbox changes
+document.addEventListener('change', function (event) {
+    if (event.target.type === 'checkbox' && event.target.name === 'selectedTeams') {
+        // Update the selected teams array
+        var teamName = event.target.value;
+        if (event.target.checked) {
+            selectedTeams.push(teamName);
+        } else {
+            selectedTeams = selectedTeams.filter(team => team !== teamName);
+        }
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     loadFormDataFromLocalStorage();
-    // ... (inny kod, jeśli jest)
 
     var formVisible = localStorage.getItem('formVisible');
 
-    // (reszta kodu do obsługi widoczności formularza)
 });
-
-    // Pozostała funkcjonalność, którą można dodać:
-    // 1. Aktualizacja wyników meczów
-    // 2. Wyświetlanie informacji o kolejnych rundach
