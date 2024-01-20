@@ -158,6 +158,7 @@ header button {
 
 .complex-form {
     margin-top: 20px;
+    margin-bottom: 20px;
     max-width: 60%; 
     margin-left: auto;
     margin-right: auto;
@@ -386,6 +387,60 @@ button:hover,
     justify-content: space-between;
 }
 
+.bracket-section {
+    display: none;
+    margin-top: 20px;
+}
+
+.bracket-section h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#tournamentInfo {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.bracket-container {
+    width: min-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid #000;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.player {
+    display: flex;
+    flex: 1;
+    text-align: center;
+}
+
+.player p {
+    margin: 10px;
+    padding: 5px;
+}
+
+.divider {
+    width: 70px;
+    height: 2px;
+    background-color: #000;
+}
+
+.winner-radio {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="radio"] {
+    margin-bottom: 5px;
+}
 
 footer {
     background-color: cyan;

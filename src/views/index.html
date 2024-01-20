@@ -59,10 +59,10 @@
         <p>Whether you're hosting an esports event, sports competition, or any other tournament, BracketCraft is designed to streamline the entire process, allowing you to focus on the excitement of the competition.</p>
     </section>
     
-    <form class="complex-form" id="tournamentForm">
+    <form class="complex-form" id="tournamentForm" onsubmit="submitForm()">
         <label for="tournamentName">Turnament name</label>
         <div class="form-group">
-            <input type="text" id="tournamentName" name="tournamentName" required>
+            <input type="text" id="tournamentName" name="tournamentName">
         </div>
 
         <label for="participantList">Participants</label>
@@ -78,20 +78,40 @@
         
             <div class="input-container">
                 <label for="startDate">Date</label>
-                <input type="date" id="startDate" name="startDate" required>
+                <input type="date" id="startDate" name="startDate">
             </div>
         </div>
 
         <label for="location">Location</label>
         <div class="form-group">
-            <input type="text" id="location" name="location" required>
+            <input type="text" id="location" name="location">
         </div>
 
-        <button id="collapseFormButton">CLOSE</button>
-        <button type="submit">SUBMIT</button>
+        <button type="button" id="collapseFormButton" onclick="hideForm()">CLOSE</button>
+        <button type="button" id="submitFormButton" onclick="submitForm()" >SUBMIT</button>
 
     </form>
     
+    <section class="bracket-section" id="bracketSection">
+        <h2>Tournament Bracket</h2>
+        <div id="tournamentInfo">
+
+        </div>
+
+        <div class="bracket-container">
+            <div class="player">
+                <p>Gracz 1</p>
+                <input type="radio" name="winner" value="player1">
+            </div>
+            <div class="divider"></div>
+            <div class="player">
+                <p>Gracz 2</p>
+                <input type="radio" name="winner" value="player2">
+            </div>
+        </div>
+        
+        
+    </section>
 
 </section>
 
