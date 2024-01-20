@@ -1,61 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BracketCraft</title>
     <link rel="stylesheet" href="/src/assets/css/style.css">
     <link rel="stylesheet" href="/src/assets/css/responsive.css">
+    <link rel="stylesheet" href="/src/assets/css/carousel.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
+    <button onclick="toggleForm()">CREATE BRACKET</button>
     <h1>BracketCraft</h1>
 </header>
 
 <section class="content">
+    <section class="page-description">
+        <h2>Welcome to BracketCraft!</h2>
+        <p>Experience the excitement of creating tournament brackets effortlessly with BracketCraft. Whether you're organizing esports competitions, sports events, or any other tournaments, our platform simplifies the process of generating tournament brackets.</p>
+        <p>Explore the features, customize your tournaments, and bring competitive gaming to a whole new level. Get started today!</p>
+    </section>
+    
     <div class="complex-layout">
-        <div class="image-group">
-            <img src="image1.jpg" alt="Zdjęcie 1">
-            <img src="image2.jpg" alt="Zdjęcie 2">
-            <img src="image3.jpg" alt="Zdjęcie 3">
-        </div>
-
-        <div class="text-overlay">
-            <p>text on image</p>
+        <div class="image-group carousel-animation">
+            <div class="image-with-text">
+                <img src="/src/assets/images/bracket1.jpg" alt="image 1">
+                <div class="text-overlay">
+                    <p>Drabinka turniejowa 1</p>
+                </div>
+            </div>
+            <div class="image-with-text carousel-animation">
+                <img src="/src/assets/images/bracket2.PNG" alt="image 2">
+                <div class="text-overlay">
+                    <p>Drabinka turniejowa 2</p>
+                </div>
+            </div>
+            <div class="image-with-text carousel-animation">
+                <img src="/src/assets/images/bracket3.PNG" alt="image 2">
+                <div class="text-overlay">
+                    <p>Drabinka turniejowa 3</p>
+                </div>
+            </div>
         </div>
     </div>
 
-
-    <div class="multimedia-icons">
-        <img src="video-thumbnail.jpg" alt="Podgląd wideo">
-        <i class="icon1"></i>
-        <i class="icon2"></i>
-    </div>
-
+    <section class="site-purpose">
+        <h2>Our Vision</h2>
+        <p>BracketCraft is dedicated to providing an intuitive and efficient platform for creating tournament brackets. Our vision is to empower organizers, gamers, and sports enthusiasts by simplifying the process of setting up and managing tournaments.</p>
+        <p>Key Features:</p>
+        <ul>
+            <li>Easy Bracket Creation: Generate tournament brackets effortlessly with just a few clicks.</li>
+            <li>Customization: Tailor your tournaments with various settings and options.</li>
+            <li>Real-time Updates: Stay informed with real-time updates on tournament progress.</li>
+            <li>Community Engagement: Connect with participants through our integrated communication features.</li>
+        </ul>
+        <p>Whether you're hosting an esports event, sports competition, or any other tournament, BracketCraft is designed to streamline the entire process, allowing you to focus on the excitement of the competition.</p>
+    </section>
+    
     <form class="complex-form" id="tournamentForm">
-        <label for="tournamentName">Nazwa Turnieju:</label>
-        <input type="text" id="tournamentName" name="tournamentName" required>
+        <label for="tournamentName">Turnament name</label>
+        <div class="form-group">
+            <input type="text" id="tournamentName" name="tournamentName" required>
+        </div>
 
-        <label for="participantList">Lista Uczestników (oddzielona przecinkami):</label>
-        <textarea id="participantList" name="participantList" rows="4" required></textarea>
+        <label for="participantList">Participants</label>
+        <div class="form-group">
+            <textarea id="participantList" name="participantList" rows="4" required></textarea>
+        </div>
+    
+        <div class="form-group label-only">
+            <div class="input-container">
+                <label for="numberOfPlayers">Number of participants</label>
+                <input type="number" id="numberOfPlayers" name="numberOfPlayers" min="2" max="30" step="2" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="startDate">Date</label>
+                <input type="date" id="startDate" name="startDate" required>
+            </div>
+        </div>
 
-        <label for="startDate">Data Rozpoczęcia Turnieju:</label>
-        <input type="date" id="startDate" name="startDate" required>
+        <label for="location">Location</label>
+        <div class="form-group">
+            <input type="text" id="location" name="location" required>
+        </div>
 
-        <label for="location">Lokalizacja Turnieju:</label>
-        <input type="text" id="location" name="location" required>
+        <button id="collapseFormButton">CLOSE</button>
+        <button type="submit">SUBMIT</button>
 
-        <button type="submit">Utwórz Drabinkę</button>
     </form>
+    
 
-
-    <button onclick="showPopup()">Pokaż Okienko</button>
-
-    <div class="slider">
-
-    </div>
 </section>
 
 <footer>
