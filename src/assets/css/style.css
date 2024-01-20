@@ -1,0 +1,153 @@
+/* colors: #5DFDCB,  #90D7FF,#C9F9FF*/
+
+body, h1, p, ul, li, form, button {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    background-color: cyan;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.content {
+    margin: 20px;
+}
+
+.complex-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image-group {
+    display: flex;
+}
+
+.image-group img {
+    max-width: 100%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.animations {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.animations div {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    margin-right: 10px;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+.multimedia-icons {
+    margin-top: 20px;
+}
+
+.multimedia-icons img,
+.multimedia-icons i {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.complex-form {
+    margin-top: 20px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.complex-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.complex-form input,
+.complex-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.complex-form button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.complex-form button:hover {
+    background-color: cyan;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+.slider {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.slider img {
+    width: 100%;
+    height: auto;
+}
+
+.div-with-scroll {
+    overflow-y: auto;
+    max-height: 200px;
+    margin-top: 20px;
+}
+
+footer {
+    background-color: cyan;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

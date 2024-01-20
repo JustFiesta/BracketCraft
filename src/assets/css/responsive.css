@@ -1,0 +1,15 @@
+/* Media query dla tabletów */
+@media screen and (min-width: 600px) {
+    /* Dodaj tutaj style dla tabletów */
+    body {
+        font-size: 16px; /* Przykładowy styl dla tabletów */
+    }
+}
+
+/* Media query dla laptopów/desktopów */
+@media screen and (min-width: 1024px) {
+    /* Dodaj tutaj style dla laptopów/desktopów */
+    body {
+        font-size: 18px; /* Przykładowy styl dla laptopów/desktopów */
+    }
+}

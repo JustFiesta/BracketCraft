@@ -1,0 +1,45 @@
+Formularz Tworzenia Turnieju:
+
+Nazwa Turnieju
+Lista Uczestników (oddzielona przecinkami)
+Data Rozpoczęcia Turnieju
+Lokalizacja Turnieju
+Dynamiczne Tworzenie Drabinek:
+
+Generowanie drabinki turniejowej na podstawie wprowadzonych danych.
+Automatyczne dostosowanie drabinki do ilości uczestników.
+Wyświetlanie Meczów:
+
+Przejrzyste wyświetlanie meczów w każdej rundzie.
+Numeracja meczów.
+Aktualizacja Wyników Meczów:
+
+Mechanizm umożliwiający aktualizację wyników meczów.
+Podgląd Drabinki:
+
+Możliwość przeglądania aktualnej drabinki wraz z wynikami meczów.
+Responsywność:
+
+Dostosowanie interfejsu do różnych urządzeń (komputery, tablety, telefony).
+Dodatkowe Funkcje:
+
+Wyświetlanie informacji o kolejnych rundach (jeśli turniej ma wiele rund).
+Dodawanie drużyn po rozpoczęciu turnieju.
+Tworzenie dodatkowych statystyk turniejowych (np. najlepsi strzelcy, najwięcej asyst).
+Wyskakujące Okienko z Informacjami o Turnieju:
+
+Możliwość dodania funkcji wyskakującego okienka z podsumowaniem turnieju lub innymi informacjami.
+Pliki CSS i Rozwijalne Zakładki:
+
+Stworzenie estetycznego wyglądu strony zgodnie z zadanymi wymaganiami.
+Wykorzystanie rozsądnej palety kolorów.
+Odpowiednie wykorzystanie rozwiązań takich jak rozwijane zakładki.
+Zachowanie Stopki na Dole Widoku:
+
+Mechanizm zapewniający, że stopka wyświetla się u dołu widoku nawet przy niewielkiej zawartości na danej podstronie.
+Opcjonalna Funkcjonalność:
+
+Zapisywanie historii turniejów lub możliwość powtórzenia turnieju.
+Testy Jednostkowe i Integracyjne:
+
+Dodanie testów jednostkowych i integracyjnych dla kluczowych funkcji aplikacji.
