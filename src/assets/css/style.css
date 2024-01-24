@@ -1,4 +1,9 @@
-/* colors: #5DFDCB,  #90D7FF,#C9F9FF*/
+/* colors: #f1fafc - tło,  #00315e - prowadzący kolor (fonty, headery),#ee351c - akcenty (guziki, logo)*/
+
+*{
+    font-family: 'Roboto', sans-serif;
+    scroll-behavior: smooth;
+}
 
 body, h1, p, ul, li, form, button {
     margin: 0;
@@ -6,14 +11,18 @@ body, h1, p, ul, li, form, button {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #f1fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 header {
-    background-color: cyan;
-    color: #fff;
+    background-color: #00315e;
+    color: #e9ecef;
+    font-size: larger;
     padding: 20px;
     text-align: center;
     position: fixed; 
@@ -30,35 +39,54 @@ header h1 {
 }
 
 header button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
+    background-color: #ee351c;
+    color: #e9ecef;
+    margin-left: 20px;
+    padding: 20px;
+    font-weight: bolder;
+    font-size: large;
     border: none;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
+}
+
+header a{
+    margin: 20px;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    right: 5px;
+    transition: 0.1s linear;
+}
+
+header a:hover{
+    transition: 0.1s linear;
+    transform: translateY(-5px);
 }
 
 .page-description {
     text-align: center;
     margin-bottom: 20px;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #f1fafc;
 }
 
-.page-description h2 {
-    color: #333;
+h2 {
+    color: #334252;
     margin-bottom: 10px;
 }
 
-.page-description p {
-    color: #555;
-    font-size: 16px;
+p {
+    color: #506174;
+    font-size: 25px;
     line-height: 1.5;
 }
 
 .content {
+    font-size: 150%;
     margin-top: 60px;
     flex: 1;
+    width: 80vw;
 }
 
 
@@ -94,7 +122,7 @@ header button {
 
 .animations {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 20px;
 }
 
@@ -118,20 +146,8 @@ header button {
 .site-purpose {
     text-align: center;
     padding: 20px;
-    background-color: #f8f8f8;
+    background-color: #f1fafc;
     margin-bottom: 20px;
-}
-
-.site-purpose h2 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.site-purpose p {
-    color: #555;
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 15px;
 }
 
 .site-purpose ul {
@@ -145,8 +161,8 @@ header button {
 
 .site-purpose li::before {
     content: "\2022"; 
-    color: #3498db;
-    font-size: 20px;
+    color: #ee351c;
+    font-size: 30px;
     display: inline-block;
     width: 1em;
     margin-left: -1em;
@@ -166,7 +182,7 @@ header button {
     transition: max-width 0.3s, margin-top 0.3s; 
     border: 1px solid #ccc; 
     border-radius: 8px; 
-    background-color: #fff; 
+    background-color: #e9ecef; 
     padding: 20px;
 
     animation-duration: 0.5s;
@@ -193,26 +209,26 @@ header button {
 }
 
 .complex-form button {
-    background-color: #3498db;
-    color: #fff;
+    background-color: #ee351c;
+    color: #e9ecef;
     padding: 10px;
     border: none;
     cursor: pointer;
     display: block;
     margin: 0 auto; 
-    transition: background-color 0.3s; 
+    font-size: medium;
 }
 
 .complex-form {
     background-color: #eef5fa;
-    color: #fff;
+    color: #e9ecef;
     padding: 10px;
     border: 2px solid slate;
-    transition: background-color 0.3s; 
 }
 
 .complex-form button:hover, header button:hover, #collapseFormButton:hover {
-    background-color: cyan;
+    background-color: #d3301a;
+    color: #fff;
 }
 
 .complex-form .form-group {
@@ -253,20 +269,16 @@ header button {
 }
 
 .complex-form .form-group button {
-    width: 100%;
+    width: 100px;
 }
 
 #collapseFormButton {
-    background-color: #3498db;
-    color: #fff;
+    background-color: #ee351c;
+    color: #e9ecef;
     padding: 10px;
     border: none;
     cursor: pointer;
     margin-bottom: 10px;
-}
-
-#collapseFormButton:hover {
-    background-color: cyan;
 }
 
 @keyframes expandForm {
@@ -329,7 +341,7 @@ header button {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    background-color: #fff;
+    background-color: #e9ecef;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     z-index: 999;
 }
@@ -354,30 +366,33 @@ button,
 #collapseFormButton {
     border: none;
     cursor: pointer;
-    border-radius: 5px; /* Dodaj zaokrąglenie */
+    border-radius: 5px;
 }
 
 button,
 #collapseFormButton,
 .complex-form button {
-    background-color: #3498db;
-    color: #fff;
+    color: #e9ecef;
     padding: 10px;
-    transition: background-color 0.3s;
+    transition: 0.2s linear;
 }
 
-button:hover,
 #collapseFormButton:hover,
 .complex-form button:hover {
-    background-color: cyan;
+    transition: 0.2s linear;
+    background-color: #d3301a;
+    color: #fff;
+    width: 110px;
+    font-weight: bold;
 }
 
 .complex-form button {
-    width: 100%;
+    width: 100px;
     padding: 10px;
     border: none;
     cursor: pointer;
     border-radius: 5px; 
+    transition: 0.2s linear;
 }
 
 .complex-form .form-group {
@@ -443,9 +458,10 @@ input[type="radio"] {
 }
 
 footer {
-    background-color: cyan;
-    color: #fff;
+    background-color: #00315e;
+    color: #e9ecef;
     padding: 10px;
     text-align: center;
     bottom: 0;
+    width: 100vw;
 }
