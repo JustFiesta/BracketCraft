@@ -1,36 +1,36 @@
 .image-group {
     display: flex;
     overflow: hidden;
-    width: 80%; 
+    width: 80%;
     max-width: 600px;
-    margin: 0 auto; 
-    justify-content: flex-start; 
+    margin: 0 auto;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .image-group .image-with-text {
-    flex: 0 0 100%; 
+    flex: 0 0 100%;
     box-sizing: border-box;
-    animation: slideImages 10s infinite linear;
+    animation: slideImages 10s infinite ;
 }
 
 @keyframes slideImages {
     0% {
         transform: translateX(0%);
     }
-    20% {
+    25% {
+        transform: translateX(0%);
+    }
+    33.33% {
         transform: translateX(-100%);
     }
-    40% {
+    58.33% {
         transform: translateX(-100%);
     }
-    60% {
+    66.66% {
         transform: translateX(-200%);
     }
-    80% {
+    91.66%, 100%{
         transform: translateX(-200%);
-    }
-    100% {
-        transform: translateX(0);
     }
 }

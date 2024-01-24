@@ -4,8 +4,7 @@ function saveFormDataToLocalStorage() {
         tournamentName: document.getElementById('tournamentName').value,
         participantList: document.getElementById('participantList').value,
         startDate: document.getElementById('startDate').value,
-        location: document.getElementById('location').value,
-        numberOfPlayers: document.getElementById('numberOfPlayers').value
+        numberOfPlayers: participantList.length
     };
 
     localStorage.setItem('formData', JSON.stringify(formData));
@@ -19,8 +18,6 @@ function loadFormDataFromLocalStorage() {
         document.getElementById('tournamentName').value = formData.tournamentName;
         document.getElementById('participantList').value = formData.participantList;
         document.getElementById('startDate').value = formData.startDate;
-        document.getElementById('location').value = formData.location;
-        document.getElementById('numberOfPlayers').value = formData.numberOfPlayers;
 
         console.log('Form data loaded from localStorage:', formData);
     } else {
@@ -72,8 +69,7 @@ function validateForm() {
     var tournamentName = document.getElementById('tournamentName').value;
     var participantList = document.getElementById('participantList').value;
     var startDate = document.getElementById('startDate').value;
-    var location = document.getElementById('location').value;
-    var numberOfPlayers = document.getElementById('numberOfPlayers').value;
+    var numberOfPlayers = participantList.length;
 
     console.log('walidacja formularza...');
     var participantsArray = participantList.split(',').map(function (participant) {
@@ -81,26 +77,19 @@ function validateForm() {
     });
 
     if (participantsArray.length % 2 !== 0) {
-        alert('Number of players must be even.');
+        alert('Number of players must be power of 2.');
         console.log('gdzie masz gości % 2 == 0?');
         return false;
     }
-    if (participantsArray.length !== parseInt(numberOfPlayers)) {
-        alert('Number of players must match the specified value.');
-        console.log('błędna ilość graczy w sotsunku do wybranej liczby');
-        return false;
-    } 
 
-    // info about turnament
+    // save info about turnament
     saveFormDataToLocalStorage();
 
-    document.getElementById('numberOfPlayers').value = participantsArray.length;
-
-    var tournamentInfo = `Tournament Name: ${tournamentName}\nParticipants: ${participantsArray.join(', ')}\nNumber of Players: ${participantsArray.length}\nStart Date: ${startDate}\nLocation: ${location}`;
+    var tournamentInfo = `Tournament Name: ${tournamentName}\nParticipants: ${participantsArray.join(', ')}\nNumber of Players: ${participantsArray.length}\nStart Date: ${startDate}\n`;
 
     document.getElementById('tournamentInfo').innerText = tournamentInfo;
 
-    document.querySelector('.bracket-section').style.display = 'block';
+    document.querySelector('.bracket-section').style.display = 'flex';
 
     localStorage.setItem('formVisible', 'false');
 
@@ -118,7 +107,9 @@ function submitForm() {
         generateBracket();
 
         var bracketSection = document.querySelector('.bracket-section');
-        bracketSection.style.display = 'block';
+        bracketSection.style.display = 'flex';
+        bracketSection.style.alignItems  = 'center';
+        bracketSection.style.justifyContent  = 'center';
 
         console.log('teraz powinna wyswietlic sie drabinka');
 
@@ -126,6 +117,8 @@ function submitForm() {
     }
 }
 
+// empty table for participants who won
+var selectedTeams = [];
 //generate bracket
 function generateBracket() {
     var bracketContainer = document.querySelector('.bracket-section');
@@ -151,19 +144,17 @@ function generateBracket() {
             matchContainer.classList.add('bracket-container', 'match');
 
             var team1 = participantsArray[i];
-            var team2 = participantsArray[i + 1];
+            var team2 = getRandomOpponent(participantsArray, i);
 
             matchContainer.innerHTML = `
                 <div class="player">
-                    <label>
-                        ${team1}<input type="checkbox" name="selectedTeams" value="${team1}">
-                    </label>
+                    <label>${team1}</label>
+                    <input type="checkbox" name="selectedTeams" value="${team1}">
                 </div>
                 <div class="divider"></div>
                 <div class="player">
-                    <label>
-                        ${team2}<input type="checkbox" name="selectedTeams" value="${team2}">
-                    </label>
+                    <label>${team2}</label>
+                    <input type="checkbox" name="selectedTeams" value="${team2}">
                 </div>
             `;
 
@@ -172,6 +163,49 @@ function generateBracket() {
 
         bracketContainer.appendChild(roundContainer);
     }
+
+    // Po zakończeniu generowania bracketu, sprawdź czy istnieje wybrany zwycięzca z poprzednich meczów
+    if (selectedTeams.length > 0) {
+        // Dodaj zwycięzców do nowej rundy
+        var nextRoundContainer = document.createElement('div');
+        nextRoundContainer.classList.add('round');
+        nextRoundContainer.innerHTML = '<h3>Round ' + (roundsCount + 1) + '</h3>';
+
+        for (var i = 0; i < selectedTeams.length; i += 2) {
+            var matchContainer = document.createElement('div');
+            matchContainer.classList.add('bracket-container', 'match');
+
+            var team1 = selectedTeams[i];
+            var team2 = selectedTeams[i + 1];
+
+            matchContainer.innerHTML = `
+                <div class="player">
+                    <label>${team1}</label>
+                    <input type="checkbox" name="selectedTeams" value="${team1}">
+                </div>
+                <div class="divider"></div>
+                <div class="player">
+                    <label>${team2}</label>
+                    <input type="checkbox" name="selectedTeams" value="${team2}">
+                </div>
+            `;
+
+            nextRoundContainer.appendChild(matchContainer);
+        }
+
+        bracketContainer.appendChild(nextRoundContainer);
+
+        // Wyczyść tabelę zwycięzców
+        selectedTeams = [];
+    }
+}
+function getRandomOpponent(participantsArray, currentIndex) {
+    // Remove the current participant from the array to avoid self-matching
+    var remainingParticipants = participantsArray.filter((_, index) => index !== currentIndex);
+
+    // Randomly select an opponent from the remaining participants
+    var randomIndex = Math.floor(Math.random() * remainingParticipants.length);
+    return remainingParticipants[randomIndex];
 }
 
 function isPowerOfTwo(number) {
@@ -183,6 +217,19 @@ document.addEventListener('change', function (event) {
     if (event.target.type === 'checkbox' && event.target.name === 'selectedTeams') {
         // Update the selected teams array
         var teamName = event.target.value;
+
+        // Wyłącz wszystkie inne checkboxy w tym meczu
+        var matchContainer = event.target.closest('.match');
+        var checkboxesInMatch = matchContainer.querySelectorAll('input[name="selectedTeams"]');
+        checkboxesInMatch.forEach(function (checkbox) {
+            if (checkbox !== event.target) {
+                checkbox.checked = false;
+                // Dodaj wyłączone checkboxy do tablicy
+                selectedTeams = selectedTeams.filter(team => team !== checkbox.value);
+            }
+        });
+
+        // Dodaj lub usuń zaznaczony zespół do/z tablicy
         if (event.target.checked) {
             selectedTeams.push(teamName);
         } else {
@@ -190,6 +237,9 @@ document.addEventListener('change', function (event) {
         }
     }
 });
+
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
     loadFormDataFromLocalStorage();
