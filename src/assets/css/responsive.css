@@ -1,12 +1,55 @@
-@media screen and (min-width: 600px) {
-    
+/* responsive.css */
+
+@media screen and (max-width: 700px) {
+    .content {
+        width: 100vw;
+    }
     body {
-        font-size: 16px; 
+        font-size: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    header button {
+        font-size: 10px;
+        padding: 10px;
+    }
+
+    .page-description,
+    .site-purpose,
+    .form-group label,
+    .form-buttons button,
+    .bracket-section h2,
+    .player p {
+        font-size: 16px;
+    }
+    .image-group {
+        width: 100%; 
+    }
+
+    .image-group .image-with-text {
+        flex: 0 0 100%; 
+    }
+
+    section p, li, ul {
+        font-size: small;
+    }
+    .complex-form { 
+        max-width: 90%;
+        margin: auto;
+    }
+    .form-buttons button {
+        font-size: small;
+    }
+    #submitFormButton, #clearFormButton, #collapseFormButton{
+        padding: 0px;
+        margin: 5px;
     }
 }
 
-@media screen and (min-width: 1024px) {
-    body {
-        font-size: 18px; 
-    }
+@media screen and (max-width: 600px) {
+    
+
 }

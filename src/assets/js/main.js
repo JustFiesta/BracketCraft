@@ -119,6 +119,15 @@ function submitForm() {
         console.log('teraz powinna wyswietlic sie drabinka');
 
         hideForm();
+
+        var tournamentName = document.getElementById('tournamentName').value;
+        var participantList = document.getElementById('participantList').value;
+        var startDate = document.getElementById('startDate').value;
+
+        let formInfo = {name: tournamentName, participants: participantList, date: startDate};
+
+        const userJSON = JSON.stringify(formInfo);
+        console.log(userJSON);
     }
 }
 
