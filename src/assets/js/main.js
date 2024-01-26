@@ -2,7 +2,7 @@
 function saveFormDataToLocalStorage() {
     var formData = {
         tournamentName: document.getElementById('tournamentName').value,
-        participantList: document.getElementById('participantList').value,
+        participantList: participantsArray,
         startDate: document.getElementById('startDate').value,
         numberOfPlayers: participantList.length
     };
@@ -38,7 +38,7 @@ function toggleForm() {
 
         localStorage.setItem('formVisible', 'true');
     }
-    console.log('otwieranie formularza');
+    // console.log('otwieranie formularza');
 }
 
 // Close form
@@ -57,24 +57,57 @@ function hideForm() {
 
     localStorage.setItem('formVisible', 'false');
 
-    console.log('zamykanie formularza');
+    // console.log('zamykanie formularza');
 }
 
+//check for team name duplication and fix it
+function fixDuplicateTeams(participantsArray) {
+    console.log('sprawdzenie duplikatów nazw');
+    var teamCount = {};
+    
+    for (var i = 0; i < participantsArray.length; i++) {
+        var team = participantsArray[i];
+        
+        if (teamCount[team]) {
+            console.log('znaleziono taką samą druzyne - dopisuje liczbe');
+            //if team was already found, add num to its name
+            teamCount[team]++;
+            participantsArray[i] = team + teamCount[team];
+        } else {
+            //set encounter as first
+            teamCount[team] = 1;
+        }
+    }
+}
+
+//global info about teams
+var participantsArray;
 // validate form
 function validateForm() {
+    console.log('walidacja formularza...');
+
     var tournamentName = document.getElementById('tournamentName').value;
     var participantList = document.getElementById('participantList').value;
     var startDate = document.getElementById('startDate').value;
-    var numberOfPlayers = participantList.length - 1;
-
-    console.log('walidacja formularza...');
-    var participantsArray = participantList.split(',').map(function (participant) {
+    
+    //create array of participant list
+    
+    participantsArray = participantList.split(',').map(function (participant) {
         return participant.trim();
     });
 
-    if (numberOfPlayers % 2 !== 0) {
-        alert('Number of players must dividable by 2.');
-        console.log('gdzie masz gości % 2 == 0?');
+    console.log('druzyny przed sprawdzeniem: ' + participantsArray);
+
+    var numberOfPlayers = participantsArray.length;
+
+    fixDuplicateTeams(participantsArray);
+
+    console.log('druzyny po sprawdzeniu: ' + participantsArray);
+
+    console.log('liczba druzyn: ' + numberOfPlayers);
+    if ((numberOfPlayers & (numberOfPlayers - 1)) !== 0) {
+        alert('Number of players must a power of 2.');
+        console.log('gdzie masz parzyste drużyny???');
         return false;
     }
 
@@ -106,8 +139,6 @@ function validateForm() {
 
 // Submit form
 function submitForm() {
-    console.log('Przesłanie formularza');
-
     var formSubmitted = validateForm();
     if (formSubmitted) {
         console.log('walidacja ok');
@@ -120,8 +151,6 @@ function submitForm() {
         bracketSection.style.display = 'flex';
         bracketSection.style.alignItems = 'center';
         bracketSection.style.justifyContent = 'center';
-
-        console.log('teraz powinna wyswietlic sie drabinka');
 
         //hide form after generating brackets
         hideForm();
@@ -153,49 +182,46 @@ function generateBracket() {
         return participant.trim();
     });
 
-    // clear bracket
-    bracketContainer.innerHTML = '';
+    //clear bracket
+    clearBracket();
 
-    // Ustaw flagę dla ostatniej rundy przed finałem
-    isFinalRound = false;
-
-    // generate bracket for the first round
+    //generate bracket for the first round
     generateRound(participantsArray, roundCounter);
 
-    // Event listener for checkbox changes
+    //listener for radio changes
     document.addEventListener('change', function (event) {
-        if (event.target.type === 'checkbox' && event.target.name === 'selectedTeams') {
-            // Update the selected teams array
-            var teamName = event.target.value;
+        console.log('nasłuchiwanie radio');
+        if (event.target.type === 'radio' && event.target.name === 'selectedTeams') {
+            //get selected team
+            var selectedTeam = event.target.value;
+            console.log('wybrano druzyne: ' + selectedTeam);
 
-            // Wyłącz wszystkie inne checkboxy w tym meczu
-            var matchContainer = event.target.closest('.match');
-            var checkboxesInMatch = matchContainer.querySelectorAll('input[name="selectedTeams"]');
-            checkboxesInMatch.forEach(function (checkbox) {
-                if (checkbox !== event.target) {
-                    checkbox.checked = false;
-                    // Dodaj wyłączone checkboxy do tablicy
-                    selectedTeams = selectedTeams.filter(team => team !== checkbox.value);
-                }
-            });
+            //get not selected team
+            var unselectedTeam = participantsArray.filter(participant => participant !== selectedTeam)[0];
+            console.log('niewybrana druzyna: ' + unselectedTeam);
 
-            // Dodaj lub usuń zaznaczony zespół do/z tablicy
+            //if event occures add checked team ...
             if (event.target.checked) {
-                selectedTeams.push(teamName);
-            } else {
-                selectedTeams = selectedTeams.filter(team => team !== teamName);
+                console.log('dodanie druzyny: ' + selectedTeam);
+                selectedTeams.push(selectedTeam);
             }
+            //... and delete not choosed one if it is in array
+            var indexOfUnselectedTeam = selectedTeams.indexOf(unselectedTeam);
+            if (indexOfUnselectedTeam !== -1) {
+                selectedTeams.splice(indexOfUnselectedTeam, 1);
+            }
+            console.log('tabela wygranych druzyn: ' + selectedTeams);
 
-            // Check if all matches in the current round have winners
+            //check if all matches in the current round have winners
             var allMatchesHaveWinners = selectedTeams.length === participantsArray.length / 2;
 
             if (allMatchesHaveWinners) {
-                // Sprawdź, czy to jest ostatnia runda przed finałem
+                //is last round?
                 if (!isFinalRound) {
-                    // Generate the next round
+                    //no - generate next
                     generateNextRound(participantsArray);
                 } else {
-                    // W przeciwnym razie, to jest ostatnia runda, pokaż zwycięzcę turnieju
+                    //yes - show who won
                     showWinner(selectedTeams[0]);
                 }
             }
@@ -210,9 +236,8 @@ function generateNextRound(participantsArray) {
     // Po zakończeniu generowania bracketu, sprawdź czy istnieje wybrany zwycięzca z poprzednich meczów
     if (selectedTeams.length > 0 && selectedTeams.length === participantsArray.length / 2) {
         // Sprawdź, czy to jest ostatnia runda przed finałem
-        var nextRoundNumber = bracketContainer.querySelectorAll('.round').length + 1;
 
-        if (nextRoundNumber < Math.ceil(Math.log2(participantsArray.length))) {
+        if (roundCounter < Math.ceil(Math.log2(participantsArray.length))) {
             // Jeżeli nie osiągnęliśmy maksymalnej liczby rund, to sprawdzamy, czy wybrano połowę ze wszystkich uczestników
             if (selectedTeams.length === participantsArray.length / 2) {
                 // Jeżeli tak, generuj kolejną rundę
@@ -223,17 +248,14 @@ function generateNextRound(participantsArray) {
                 // Wyczyść tabelę zwycięzców
                 selectedTeams = [];
 
-                generateRound(participantsArray, nextRoundNumber, participantsArray.length / 2);
+                generateRound(participantsArray, roundCounter);
             }
         } else {
             // W przeciwnym razie, to jest ostatnia runda przed finałem
             isFinalRound = true;
 
             // Jeśli jest to ostatnia runda przed finałem, zacznij od nowa od pierwszej rundy
-            generateRound(selectedTeams, 1, selectedTeams.length / 2);
-
-            // Wyczyść tabelę zwycięzców
-            selectedTeams = [];
+            generateRound(selectedTeams, roundCounter);
         }
     }
 }
@@ -256,21 +278,27 @@ function generateRound(participantsArray, round) {
         var team2 = getRandomOpponent(participantsArray, i);
 
         matchContainer.innerHTML = `
-            <div class="player">
-                <label>${team1}</label>
-                <input type="checkbox" name="selectedTeams" value="${team1}">
-            </div>
-            <div class="divider"></div>
-            <div class="player">
-                <label>${team2}</label>
-                <input type="checkbox" name="selectedTeams" value="${team2}">
-            </div>
+            <form action="">
+                <div class="player">
+                    
+                        <label>${team1}</label>
+                        <input type="radio" name="selectedTeams" value="${team1}">
+                    
+                </div>
+                <div class="divider"></div>
+                <div class="player">
+                        <label>${team2}</label>
+                        <input type="radio" name="selectedTeams" value="${team2}">
+                    
+                </div>
+            </form>
         `;
 
         roundContainer.appendChild(matchContainer);
     }
 
     bracketContainer.appendChild(roundContainer);
+    roundCounter++;
 }
 
 // Function to show the winner
@@ -299,7 +327,20 @@ function getRandomOpponent(participantsArray, currentIndex) {
 }
 
 function clearBracket(){
-    console.log('Clearing');
+    console.log('Clearing bracket adn turnament info');
+
+    //clear the bracket section
+    var bracketContainer = document.querySelector('.bracket-section');
+    bracketContainer.innerHTML = '';
+
+    //clear tournament info section
+    var tournamentInfoContainer = document.querySelector('#tournamentInfo');
+    tournamentInfoContainer.innerHTML = '';
+
+    //reset information
+    selectedTeams = [];
+    isFinalRound = false;
+    roundCounter = 1;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
