@@ -3,6 +3,7 @@
 *{
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
+    letter-spacing: 2px;
 }
 
 body, h1, p, ul, li, form, button {
@@ -327,18 +328,6 @@ li{
     animation-name: collapseForm;
 }
 
-.popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #e9ecef;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-}
-
 .slider {
     margin-top: 20px;
     overflow: hidden;
@@ -410,6 +399,7 @@ button,
 
 .bracket-section {
     display: none;
+    overflow: scroll;
 }
 
 #tournamentInfo {
@@ -426,20 +416,25 @@ button,
     flex-direction: column;
     border: 3px solid #586172;
     border-radius: 20%;
-    padding: 10px;
+    padding: 10px 0px 10px 0px;
     margin-bottom: 10px;
     color: #555;
 }
 .round{
     margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .match {
-    width: 15vw;
+    min-width: max-content;
+    width: 13vw;
 }
 
 .player {
-    width: 80%;
+    min-width: max-content;
+    width: 100%;
     display: flex;
     flex: 1;
     justify-content: space-between;
@@ -451,9 +446,61 @@ button,
 }
 
 .divider {
-    width: 15vw;
+    min-width: max-content;
+    width: 10vw;
     height: 2px;
     background-color: #d4341f;
+}
+
+.bracket-container.winner {
+    border: none !important;
+    font-weight: bolder;
+    padding: 3px;
+    background: #f1fafc;
+}
+
+.winner {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: #f1fafc;
+    border: 3px solid;
+    border-image: -moz-linear-gradient(left, #fed330 0%, #fed330 20%, #e63841 20%, #e63841 20%, #e63841 40%, #5ed6fd 40%, #5ed6fd 40%, #e63841 40%, #5ed6fd 40%, #5ed6fd 40%, #5ed6fd 60%, #45c33b 60%, #45c33b 80%, #1172c0 80%, #1172c0 80%, #1172c0 100%); /* FF3.6+ */
+    border-image: -webkit-gradient(linear, left top, right top, color-stop(0%,#fed330), color-stop(20%,#fed330), color-stop(20%,#e63841), color-stop(20%,#e63841), color-stop(40%,#e63841), color-stop(40%,#5ed6fd), color-stop(40%,#5ed6fd), color-stop(40%,#e63841), color-stop(40%,#5ed6fd), color-stop(40%,#5ed6fd), color-stop(60%,#5ed6fd), color-stop(60%,#45c33b), color-stop(80%,#45c33b), color-stop(80%,#1172c0), color-stop(80%,#1172c0), color-stop(100%,#1172c0)) 1 stretch repeat; /* Chrome,Safari4+ */
+    border-image: -webkit-linear-gradient(left, #fed330 0%,#fed330 20%,#e63841 20%,#e63841 20%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#5ed6fd 60%,#45c33b 60%,#45c33b 80%,#1172c0 80%,#1172c0 80%,#1172c0 100%) 1 stretch repeat; /* Chrome10+,Safari5.1+ */
+    border-image: -o-linear-gradient(left, #fed330 0%,#fed330 20%,#e63841 20%,#e63841 20%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#5ed6fd 60%,#45c33b 60%,#45c33b 80%,#1172c0 80%,#1172c0 80%,#1172c0 100%) 1 stretch repeat; /* Opera 11.10+ */
+    border-image: -ms-linear-gradient(left, #fed330 0%,#fed330 20%,#e63841 20%,#e63841 20%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#5ed6fd 60%,#45c33b 60%,#45c33b 80%,#1172c0 80%,#1172c0 80%,#1172c0 100%) 1 stretch repeat; /* IE10+ */
+    border-image: linear-gradient(to right, #fed330 0%,#fed330 20%,#e63841 20%,#e63841 20%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#e63841 40%,#5ed6fd 40%,#5ed6fd 40%,#5ed6fd 60%,#45c33b 60%,#45c33b 80%,#1172c0 80%,#1172c0 80%,#1172c0 100%) 1 stretch repeat; /* W3C */
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    animation: rotateBorder 2s ease-in-out infinite;
+}
+
+@keyframes rotateBorder {
+    0% {
+        border-image-source: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+    }
+    20% {
+        border-image-source: linear-gradient(to right, #8b00ff, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082);
+    }
+    40% {
+        border-image-source: linear-gradient(to right, #4b0082, #8b00ff, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff);
+    }
+    60% {
+        border-image-source: linear-gradient(to right, #0000ff, #4b0082, #8b00ff, #ff0000, #ff7f00, #ffff00, #00ff00);
+    }
+    80% {
+        border-image-source: linear-gradient(to right, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000, #ff7f00, #ffff00);
+    }
+    100% {
+        border-image-source: linear-gradient(to right, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000, #ff7f00);
+    }
+}
+
+.winner p {
+    color: #41d459;
 }
 
 .winner-radio {
