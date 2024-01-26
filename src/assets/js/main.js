@@ -228,7 +228,8 @@ function generateBracket() {
         }
     });
 }
-
+//TODO
+//generate next round with clean selectedTeams, and then add winners
 // Function to generate the next round
 function generateNextRound(participantsArray) {
     var bracketContainer = document.querySelector('.bracket-section');
@@ -258,6 +259,7 @@ function generateNextRound(participantsArray) {
             generateRound(selectedTeams, roundCounter);
         }
     }
+    selectedTeams = [];
 }
 
 // Function to generate a specific round
@@ -305,12 +307,12 @@ function generateRound(participantsArray, round) {
 function showWinner(winner) {
     var bracketContainer = document.querySelector('.bracket-section');
     var winnerContainer = document.createElement('div');
-    winnerContainer.classList.add('round', 'winner');
+    winnerContainer.classList.add('round');
     winnerContainer.innerHTML = '<h3>Winner</h3>';
     winnerContainer.innerHTML += `
-        <div class="bracket-container">
-            <div class="player">
-                <label>${winner}</label>
+        <div class="bracket-container winner">
+            <div class="winner">
+                <p>${winner}</p>
             </div>
         </div>
     `;
@@ -319,11 +321,11 @@ function showWinner(winner) {
 
 function getRandomOpponent(participantsArray, currentIndex) {
     // Remove the current participant from the array to avoid self-matching
-    var remainingParticipants = participantsArray.filter((_, index) => index !== currentIndex);
+    participantsArray = participantsArray.filter((_, index) => index !== currentIndex);
 
     // Randomly select an opponent from the remaining participants
-    var randomIndex = Math.floor(Math.random() * remainingParticipants.length);
-    return remainingParticipants[randomIndex];
+    var randomIndex = Math.floor(Math.random() * participantsArray.length);
+    return participantsArray[randomIndex];
 }
 
 function clearBracket(){
