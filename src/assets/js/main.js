@@ -61,20 +61,19 @@ function hideForm() {
 }
 
 // validate form
-// validate form
 function validateForm() {
     var tournamentName = document.getElementById('tournamentName').value;
     var participantList = document.getElementById('participantList').value;
     var startDate = document.getElementById('startDate').value;
-    var numberOfPlayers = participantList.length;
+    var numberOfPlayers = participantList.length - 1;
 
     console.log('walidacja formularza...');
     var participantsArray = participantList.split(',').map(function (participant) {
         return participant.trim();
     });
 
-    if (participantsArray.length % 2 !== 0) {
-        alert('Number of players must be a power of 2.');
+    if (numberOfPlayers % 2 !== 0) {
+        alert('Number of players must dividable by 2.');
         console.log('gdzie masz gości % 2 == 0?');
         return false;
     }
@@ -82,14 +81,19 @@ function validateForm() {
     // save info about turnament
     saveFormDataToLocalStorage();
 
-    var tournamentInfoElement = document.getElementById('tournamentInfo');
+    //set info about tournament
+    var tournamentInfoContainer = document.querySelector('#tournamentInfo');
 
-    if (tournamentInfoElement) {
-        var tournamentInfo = `Tournament Name: ${tournamentName}\nParticipants: ${participantsArray.join(', ')}\nNumber of Players: ${participantsArray.length}\nStart Date: ${startDate}\n`;
+    tournamentInfoContainer.style.display = 'flex';
 
-        tournamentInfoElement.innerText = tournamentInfo;
+    console.log(tournamentInfoContainer);
+
+    if (tournamentInfoContainer == undefined) {
+        console.error('div tournamentInfo undefined');
     } else {
-        console.error('Element with id "tournamentInfo" not found.');
+        var tournamentInfo = `<h2>Tournament Name: ${tournamentName}</h2>Participants: ${participantsArray.join(', ')}<br>Number of Players: ${participantsArray.length}<br>Start Date: ${startDate}<br>`;
+
+        tournamentInfoContainer.innerHTML = tournamentInfo;
     }
 
     var bracketSection = document.querySelector('.bracket-section');
@@ -100,7 +104,6 @@ function validateForm() {
     return true;
 }
 
-
 // Submit form
 function submitForm() {
     console.log('Przesłanie formularza');
@@ -109,8 +112,10 @@ function submitForm() {
     if (formSubmitted) {
         console.log('walidacja ok');
 
+        //validation ok - generate brackets
         generateBracket();
 
+        //display brackets in flex mode
         var bracketSection = document.querySelector('.bracket-section');
         bracketSection.style.display = 'flex';
         bracketSection.style.alignItems = 'center';
@@ -118,6 +123,7 @@ function submitForm() {
 
         console.log('teraz powinna wyswietlic sie drabinka');
 
+        //hide form after generating brackets
         hideForm();
 
         var tournamentName = document.getElementById('tournamentName').value;
@@ -126,6 +132,7 @@ function submitForm() {
 
         let formInfo = {name: tournamentName, participants: participantList, date: startDate};
 
+        //JSON for project requirements
         const userJSON = JSON.stringify(formInfo);
         console.log(userJSON);
     }
@@ -134,13 +141,12 @@ function submitForm() {
 // empty table for participants who won
 var selectedTeams = [];
 
-// empty table for participants who won
-var selectedTeams = [];
-
-// Ostatnia runda przed finałem
+// flag for last round
 var isFinalRound = false;
 
-//generate bracket
+var roundCounter = 1;
+
+//generate brackets
 function generateBracket() {
     var bracketContainer = document.querySelector('.bracket-section');
     var participantsArray = document.getElementById('participantList').value.split(',').map(function (participant) {
@@ -150,13 +156,11 @@ function generateBracket() {
     // clear bracket
     bracketContainer.innerHTML = '';
 
-    var roundsCount = Math.ceil(Math.log2(participantsArray.length));
-
     // Ustaw flagę dla ostatniej rundy przed finałem
     isFinalRound = false;
 
     // generate bracket for the first round
-    generateRound(participantsArray, 1);
+    generateRound(participantsArray, roundCounter);
 
     // Event listener for checkbox changes
     document.addEventListener('change', function (event) {
@@ -234,8 +238,6 @@ function generateNextRound(participantsArray) {
     }
 }
 
-
-
 // Function to generate a specific round
 function generateRound(participantsArray, round) {
     var bracketContainer = document.querySelector('.bracket-section');
@@ -296,8 +298,8 @@ function getRandomOpponent(participantsArray, currentIndex) {
     return remainingParticipants[randomIndex];
 }
 
-function isPowerOfTwo(number) {
-    return (number & (number - 1)) === 0;
+function clearBracket(){
+    console.log('Clearing');
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -309,8 +311,5 @@ document.addEventListener('DOMContentLoaded', function () {
     if (formVisible === 'true') {
         toggleForm();
     }
-
-    // Generate the bracket
-    generateBracket();
 });
 
