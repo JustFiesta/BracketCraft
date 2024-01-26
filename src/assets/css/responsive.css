@@ -47,9 +47,14 @@
         padding: 0px;
         margin: 5px;
     }
-}
 
-@media screen and (max-width: 600px) {
-    
-
+    .match {
+        width: 25vw;
+    }
+    .divider {
+        width: 100%;
+    }
+    .match label {
+        font-size: smaller;
+    }
 }
