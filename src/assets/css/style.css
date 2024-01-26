@@ -414,18 +414,21 @@ button,
 
 #tournamentInfo {
     color: #555;
-    font-size: large;
-    line-height: 1.5;
+    font-size: medium;
     margin-bottom: 15px;
+    display: none;
+    flex-direction: column;
 }
 
 .bracket-container {
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 2px solid #000;
+    border: 3px solid #586172;
+    border-radius: 20%;
     padding: 10px;
     margin-bottom: 10px;
+    color: #555;
 }
 .round{
     margin-right: 20px;
@@ -450,7 +453,7 @@ button,
 .divider {
     width: 15vw;
     height: 2px;
-    background-color: #000;
+    background-color: #ee351c;
 }
 
 .winner-radio {
