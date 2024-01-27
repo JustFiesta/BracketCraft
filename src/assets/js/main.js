@@ -127,7 +127,7 @@ function validateForm() {
     } else {
 
         var tournamentInfoName = document.createElement('h2');
-        tournamentInfoName.innerHTML = 'Tournament: ' +  tournamentName;
+        tournamentInfoName.innerHTML =  tournamentName;
         
         var tournamentInfoDate = document.createElement('p');
         tournamentInfoDate.innerHTML = tournamentDate;
@@ -342,14 +342,14 @@ function getRandomOpponent(participantsArray, currentIndex) {
 }
 
 function clearBracket(){
-    console.log('czyszcze formularz i drabinke');
+    console.log('Clearing bracket and turnament info');
 
     //clear the bracket section
     var bracketContainer = document.querySelector('.bracket-section');
     bracketContainer.innerHTML = '';
 
     //clear tournament info section
-    var tournamentInfoContainer = document.getElementById('tournamentInfo');
+    var tournamentInfoContainer = document.querySelector('tournamentInfo');
     tournamentInfoContainer.innerHTML = '';
 
     //reset information
