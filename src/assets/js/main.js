@@ -191,9 +191,6 @@ function generateBracket() {
         return participant.trim();
     });
 
-    //clear bracket
-    clearBracket();
-
     //generate bracket for the first round
     generateRound(participantsArray, roundCounter);
 
@@ -349,8 +346,8 @@ function clearBracket(){
     bracketContainer.innerHTML = '';
 
     //clear tournament info section
-    var tournamentInfoContainer = document.querySelector('tournamentInfo');
-    tournamentInfoContainer.innerHTML = '';
+    var tournamentInfoContainer2 = document.getElementById('tournamentInfo');
+    tournamentInfoContainer2.innerHTML = '';
 
     //reset information
     selectedTeams = [];
