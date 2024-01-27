@@ -4,7 +4,7 @@ function saveFormDataToLocalStorage() {
         tournamentName: document.getElementById('tournamentName').value,
         participantList: participantsArray,
         startDate: document.getElementById('startDate').value,
-        numberOfPlayers: participantList.length
+        numberOfPlayers: participantsArray.length
     };
 
     localStorage.setItem('formData', JSON.stringify(formData));
@@ -88,7 +88,7 @@ function validateForm() {
 
     var tournamentName = document.getElementById('tournamentName').value;
     var participantList = document.getElementById('participantList').value;
-    var startDate = document.getElementById('startDate').value;
+    var tournamentDate = document.getElementById('startDate').value;
     
     //create array of participant list
     
@@ -115,8 +115,9 @@ function validateForm() {
     saveFormDataToLocalStorage();
 
     //set info about tournament
-    var tournamentInfoContainer = document.querySelector('#tournamentInfo');
+    var tournamentInfoContainer = document.getElementById('tournamentInfo');
 
+    console.log('pokazuje info o turnieju');
     tournamentInfoContainer.style.display = 'flex';
 
     console.log(tournamentInfoContainer);
@@ -124,9 +125,17 @@ function validateForm() {
     if (tournamentInfoContainer == undefined) {
         console.error('div tournamentInfo undefined');
     } else {
-        var tournamentInfo = `<h2>Tournament Name: ${tournamentName}</h2>Participants: ${participantsArray.join(', ')}<br>Number of Players: ${participantsArray.length}<br>Start Date: ${startDate}<br>`;
 
-        tournamentInfoContainer.innerHTML = tournamentInfo;
+        var tournamentInfoName = document.createElement('h2');
+        tournamentInfoName.innerHTML = 'Tournament: ' +  tournamentName;
+        
+        var tournamentInfoDate = document.createElement('p');
+        tournamentInfoDate.innerHTML = tournamentDate;
+
+        tournamentInfoContainer.innerHTML = '';
+
+        tournamentInfoContainer.appendChild(tournamentInfoName);
+        tournamentInfoContainer.appendChild(tournamentInfoDate);
     }
 
     var bracketSection = document.querySelector('.bracket-section');
@@ -232,7 +241,7 @@ function generateBracket() {
 //generate next round with clean selectedTeams, and then add winners
 // Function to generate the next round
 function generateNextRound(participantsArray) {
-    var bracketContainer = document.querySelector('.bracket-section');
+    console.log('generuje następną runde: ' + roundCounter);
 
     // Po zakończeniu generowania bracketu, sprawdź czy istnieje wybrany zwycięzca z poprzednich meczów
     if (selectedTeams.length > 0 && selectedTeams.length === participantsArray.length / 2) {
@@ -245,6 +254,7 @@ function generateNextRound(participantsArray) {
 
                 // Ogranicz pulę graczy do wybranych zwycięzców
                 participantsArray = selectedTeams;
+                console.log('zwyciezcy rundy ' + (roundCounter-1) + ': ' + participantsArray);
 
                 // Wyczyść tabelę zwycięzców
                 selectedTeams = [];
@@ -252,6 +262,7 @@ function generateNextRound(participantsArray) {
                 generateRound(participantsArray, roundCounter);
             }
         } else {
+            console.log('ustawiam finał');
             // W przeciwnym razie, to jest ostatnia runda przed finałem
             isFinalRound = true;
 
@@ -264,19 +275,21 @@ function generateNextRound(participantsArray) {
 
 // Function to generate a specific round
 function generateRound(participantsArray, round) {
+    console.log('generuje runde');
     var bracketContainer = document.querySelector('.bracket-section');
 
     var roundContainer = document.createElement('div');
     roundContainer.classList.add('round');
     roundContainer.innerHTML = '<h3>Round ' + round + '</h3>';
 
-    var numberOfTeams = participantsArray.length / Math.pow(2, round - 1);
+    var numberOfTeams = participantsArray.length;
+    console.log('liczba druzyn po rundzie ' + (roundCounter - 1) + ': ' + numberOfTeams);
 
     for (var i = 0; i < numberOfTeams; i += 2) {
         var matchContainer = document.createElement('div');
         matchContainer.classList.add('bracket-container', 'match');
 
-        var team1 = participantsArray[i];
+        var team1 = getRandomOpponent(participantsArray, i);
         var team2 = getRandomOpponent(participantsArray, i);
 
         matchContainer.innerHTML = `
@@ -329,14 +342,14 @@ function getRandomOpponent(participantsArray, currentIndex) {
 }
 
 function clearBracket(){
-    console.log('Clearing bracket adn turnament info');
+    console.log('czyszcze formularz i drabinke');
 
     //clear the bracket section
     var bracketContainer = document.querySelector('.bracket-section');
     bracketContainer.innerHTML = '';
 
     //clear tournament info section
-    var tournamentInfoContainer = document.querySelector('#tournamentInfo');
+    var tournamentInfoContainer = document.getElementById('tournamentInfo');
     tournamentInfoContainer.innerHTML = '';
 
     //reset information
