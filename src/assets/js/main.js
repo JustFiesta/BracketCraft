@@ -2,7 +2,7 @@
 function saveFormDataToLocalStorage() {
     var formData = {
         tournamentName: document.getElementById('tournamentName').value,
-        participantList: participantsArray,
+        participantList: participantsArray.toString(),
         startDate: document.getElementById('startDate').value,
         numberOfPlayers: participantsArray.length
     };
@@ -191,6 +191,11 @@ function generateBracket() {
         return participant.trim();
     });
 
+    if (participantsArray.length <= 0) {
+        console.log('no participants in main list - copy winners');
+        participantsArray = selectedTeams;
+    }
+
     //generate bracket for the first round
     generateRound(participantsArray, roundCounter);
 
@@ -239,6 +244,8 @@ function generateBracket() {
 // Function to generate the next round
 function generateNextRound(participantsArray) {
     console.log('generuje następną runde: ' + roundCounter);
+    console.log('zwyciezcy poprzedniej z selectedTeams: ' + selectedTeams);
+    console.log('zawartosc globalnej participantsArray: ' + participantsArray);
 
     // Po zakończeniu generowania bracketu, sprawdź czy istnieje wybrany zwycięzca z poprzednich meczów
     if (selectedTeams.length > 0 && selectedTeams.length === participantsArray.length / 2) {
@@ -251,12 +258,12 @@ function generateNextRound(participantsArray) {
 
                 // Ogranicz pulę graczy do wybranych zwycięzców
                 participantsArray = selectedTeams;
-                console.log('zwyciezcy rundy ' + (roundCounter-1) + ': ' + participantsArray);
-
+                console.log('zwyciezcy rundy - podmiana na selected teams do participantsArray  ' + (roundCounter-1) + ': ' + participantsArray);
+                
+                generateRound(participantsArray, roundCounter);
+                
                 // Wyczyść tabelę zwycięzców
                 selectedTeams = [];
-
-                generateRound(participantsArray, roundCounter);
             }
         } else {
             console.log('ustawiam finał');
@@ -273,6 +280,7 @@ function generateNextRound(participantsArray) {
 // Function to generate a specific round
 function generateRound(participantsArray, round) {
     console.log('generuje runde');
+    console.log('zawodnicy z poprzedniej w generateRound: ' + participantsArray.toString());
     var bracketContainer = document.querySelector('.bracket-section');
 
     var roundContainer = document.createElement('div');
@@ -283,11 +291,14 @@ function generateRound(participantsArray, round) {
     console.log('liczba druzyn po rundzie ' + (roundCounter - 1) + ': ' + numberOfTeams);
 
     for (var i = 0; i < numberOfTeams; i += 2) {
+        console.log('genRound pętla for, druzyny w participantsArray: ' + participantsArray.toString());
         var matchContainer = document.createElement('div');
         matchContainer.classList.add('bracket-container', 'match');
 
-        var team1 = getRandomOpponent(participantsArray, i);
-        var team2 = getRandomOpponent(participantsArray, i);
+        var team1 = getRandomOpponent();
+        var team2 = getRandomOpponent();
+
+        console.log('randomowo dobierani przeciwnicy: ' + team1 + ' ' + team2);
 
         matchContainer.innerHTML = `
             <form action="">
@@ -329,13 +340,22 @@ function showWinner(winner) {
     bracketContainer.appendChild(winnerContainer);
 }
 
-function getRandomOpponent(participantsArray, currentIndex) {
-    // Remove the current participant from the array to avoid self-matching
-    participantsArray = participantsArray.filter((_, index) => index !== currentIndex);
+function getRandomOpponent() {
+    console.log('losuje przeciwnika z globalnej participantsArray: ' + participantsArray.toString());
+    console.log('check przeciwnika z selectedTeams: ' + selectedTeams.toString());
+    if (participantsArray.length === 0) {
+        // Wszyscy uczestnicy zostali już wylosowani, zwróć null lub podejmij odpowiednie działanie
+        participantsArray = selectedTeams;
+    }
 
     // Randomly select an opponent from the remaining participants
     var randomIndex = Math.floor(Math.random() * participantsArray.length);
-    return participantsArray[randomIndex];
+    var selectedOpponent = participantsArray[randomIndex];
+
+    // Remove the selected participant from the array
+    participantsArray.splice(randomIndex, 1);
+
+    return selectedOpponent;
 }
 
 function clearBracket(){
