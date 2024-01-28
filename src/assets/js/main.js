@@ -179,7 +179,7 @@ function submitForm() {
     }
 }
 
-// empty table for participants who won
+// empty table for winners
 var selectedTeams = [];
 
 // flag for last round
@@ -239,46 +239,48 @@ function generateBracket() {
         }
     });
 }
-//TODO
-//generate next round with clean selectedTeams, and then add winners
+
 // Function to generate the next round 
 function generateNextRound() {
     console.log('generuje następną runde: ' + roundCounter);
     console.log('zwyciezcy poprzedniej z selectedTeams: ' + selectedTeams);
     console.log('zawartosc globalnej participantsArray: ' + participantsArray);
 
-    console.log('check pierwszego warunku:' + selectedTeams.length + ' > ' + 0 + ' && ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
-    // Po zakończeniu generowania bracketu, sprawdź czy istnieje wybrany zwycięzca z poprzednich meczów
+    // console.log('check pierwszego warunku:' + selectedTeams.length + ' > ' + 0 + ' && ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
+
+    //check if we have winners
     if (selectedTeams.length > 0 && selectedTeams.length === participantsArray.length / 2) {
         // Sprawdź, czy to jest ostatnia runda przed finałem
 
-        console.log('check drugiego warunku: ' + roundCounter  + ' < ' +  Math.ceil(Math.log2(numberOfPlayers)));
-        if (roundCounter < Math.ceil(Math.log2(numberOfPlayers))) {
-            // Jeżeli nie osiągnęliśmy maksymalnej liczby rund, to sprawdzamy, czy wybrano połowę ze wszystkich uczestników
-            console.log('check trzeciego warunku: ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
-            if (selectedTeams.length === participantsArray.length / 2) {
-                // Jeżeli tak, generuj kolejną rundę
+        // console.log('check drugiego warunku: ' + roundCounter  + ' < ' +  Math.ceil(Math.log2(numberOfPlayers)));
 
-                // Ogranicz pulę graczy do wybranych zwycięzców
+        //check if it should be normal round
+        if (roundCounter < Math.ceil(Math.log2(numberOfPlayers))) {
+            
+            // console.log('check trzeciego warunku: ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
+
+            //check if we choosed winners from every match
+            if (selectedTeams.length === participantsArray.length / 2) {
+                //create next normal round for winners from previous one
+
                 participantsArray = selectedTeams;
-                console.log('zwyciezcy rundy - podmiana na selected teams do participantsArray  ' + (roundCounter-1) + ': ' + participantsArray);
+                // console.log('zwyciezcy rundy - podmiana na selected teams do participantsArray  ' + (roundCounter-1) + ': ' + participantsArray);
                 
                 generateRound(participantsArray, roundCounter);
                 
-                // Wyczyść tabelę zwycięzców
+                //make room for new winners
                 selectedTeams = [];
             }
         } else {
+            // its final then
             console.log('ustawiam finał');
             console.log('selectedTeams: ' + selectedTeams);
             console.log('participantsArray: ' + participantsArray);
-            // W przeciwnym razie, to jest ostatnia runda przed finałem
 
             participantsArray = selectedTeams;
 
             isFinalRound = true;
 
-            // Jeśli jest to ostatnia runda przed finałem, zacznij od nowa od pierwszej rundy
             generateRound(selectedTeams, roundCounter);
         }
     }
@@ -349,6 +351,7 @@ function showWinner(winner) {
     bracketContainer.appendChild(winnerContainer);
 }
 
+//select random opponent from the copy of global array and remove it after choosing
 function getRandomOpponent() {
     var participantArrayCopy = participantsArray.slice();
     // console.log('losuje przeciwnika z kopii globalnej participantsArray: ' + participantArrayCopy.toString());
