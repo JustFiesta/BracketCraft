@@ -82,6 +82,7 @@ function fixDuplicateTeams(participantsArray) {
 
 //global info about teams
 var participantsArray;
+var numberOfPlayers;
 // validate form
 function validateForm() {
     console.log('walidacja formularza...');
@@ -98,7 +99,7 @@ function validateForm() {
 
     console.log('druzyny przed sprawdzeniem: ' + participantsArray);
 
-    var numberOfPlayers = participantsArray.length;
+    numberOfPlayers = participantsArray.length;
 
     fixDuplicateTeams(participantsArray);
 
@@ -152,6 +153,8 @@ function submitForm() {
     if (formSubmitted) {
         console.log('walidacja ok');
 
+        clearBracket();
+
         //validation ok - generate brackets
         generateBracket();
 
@@ -186,22 +189,16 @@ var roundCounter = 1;
 
 //generate brackets
 function generateBracket() {
-    var bracketContainer = document.querySelector('.bracket-section');
-    var participantsArray = document.getElementById('participantList').value.split(',').map(function (participant) {
-        return participant.trim();
-    });
-
-    if (participantsArray.length <= 0) {
-        console.log('no participants in main list - copy winners');
-        participantsArray = selectedTeams;
-    }
 
     //generate bracket for the first round
+    if (participantsArray.length <= 2){
+        isFinalRound = true;
+    }
     generateRound(participantsArray, roundCounter);
 
     //listener for radio changes
     document.addEventListener('change', function (event) {
-        console.log('nasłuchiwanie radio');
+        // console.log('nasłuchiwanie radio');
         if (event.target.type === 'radio' && event.target.name === 'selectedTeams') {
             //get selected team
             var selectedTeam = event.target.value;
@@ -222,15 +219,18 @@ function generateBracket() {
                 selectedTeams.splice(indexOfUnselectedTeam, 1);
             }
             console.log('tabela wygranych druzyn: ' + selectedTeams);
+            console.log('tabela globalna druzyn: ' + participantsArray);
 
             //check if all matches in the current round have winners
             var allMatchesHaveWinners = selectedTeams.length === participantsArray.length / 2;
+
+            console.log('allMatchesHaveWinners: ' + allMatchesHaveWinners);
 
             if (allMatchesHaveWinners) {
                 //is last round?
                 if (!isFinalRound) {
                     //no - generate next
-                    generateNextRound(participantsArray);
+                    generateNextRound();
                 } else {
                     //yes - show who won
                     showWinner(selectedTeams[0]);
@@ -241,18 +241,21 @@ function generateBracket() {
 }
 //TODO
 //generate next round with clean selectedTeams, and then add winners
-// Function to generate the next round
-function generateNextRound(participantsArray) {
+// Function to generate the next round 
+function generateNextRound() {
     console.log('generuje następną runde: ' + roundCounter);
     console.log('zwyciezcy poprzedniej z selectedTeams: ' + selectedTeams);
     console.log('zawartosc globalnej participantsArray: ' + participantsArray);
 
+    console.log('check pierwszego warunku:' + selectedTeams.length + ' > ' + 0 + ' && ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
     // Po zakończeniu generowania bracketu, sprawdź czy istnieje wybrany zwycięzca z poprzednich meczów
     if (selectedTeams.length > 0 && selectedTeams.length === participantsArray.length / 2) {
         // Sprawdź, czy to jest ostatnia runda przed finałem
 
-        if (roundCounter < Math.ceil(Math.log2(participantsArray.length))) {
+        console.log('check drugiego warunku: ' + roundCounter  + ' < ' +  Math.ceil(Math.log2(numberOfPlayers)));
+        if (roundCounter < Math.ceil(Math.log2(numberOfPlayers))) {
             // Jeżeli nie osiągnęliśmy maksymalnej liczby rund, to sprawdzamy, czy wybrano połowę ze wszystkich uczestników
+            console.log('check trzeciego warunku: ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
             if (selectedTeams.length === participantsArray.length / 2) {
                 // Jeżeli tak, generuj kolejną rundę
 
@@ -267,7 +270,12 @@ function generateNextRound(participantsArray) {
             }
         } else {
             console.log('ustawiam finał');
+            console.log('selectedTeams: ' + selectedTeams);
+            console.log('participantsArray: ' + participantsArray);
             // W przeciwnym razie, to jest ostatnia runda przed finałem
+
+            participantsArray = selectedTeams;
+
             isFinalRound = true;
 
             // Jeśli jest to ostatnia runda przed finałem, zacznij od nowa od pierwszej rundy
@@ -280,7 +288,7 @@ function generateNextRound(participantsArray) {
 // Function to generate a specific round
 function generateRound(participantsArray, round) {
     console.log('generuje runde');
-    console.log('zawodnicy z poprzedniej w generateRound: ' + participantsArray.toString());
+    // console.log('zawodnicy z poprzedniej w generateRound: ' + participantsArray.toString());
     var bracketContainer = document.querySelector('.bracket-section');
 
     var roundContainer = document.createElement('div');
@@ -288,17 +296,17 @@ function generateRound(participantsArray, round) {
     roundContainer.innerHTML = '<h3>Round ' + round + '</h3>';
 
     var numberOfTeams = participantsArray.length;
-    console.log('liczba druzyn po rundzie ' + (roundCounter - 1) + ': ' + numberOfTeams);
+    // console.log('liczba druzyn po rundzie ' + (roundCounter - 1) + ': ' + numberOfTeams);
 
     for (var i = 0; i < numberOfTeams; i += 2) {
-        console.log('genRound pętla for, druzyny w participantsArray: ' + participantsArray.toString());
+        // console.log('genRound pętla for, druzyny w participantsArray: ' + participantsArray.toString());
         var matchContainer = document.createElement('div');
         matchContainer.classList.add('bracket-container', 'match');
 
         var team1 = getRandomOpponent();
         var team2 = getRandomOpponent();
 
-        console.log('randomowo dobierani przeciwnicy: ' + team1 + ' ' + team2);
+        // console.log('randomowo dobierani przeciwnicy: ' + team1 + ' ' + team2);
 
         matchContainer.innerHTML = `
             <form action="">
@@ -326,6 +334,7 @@ function generateRound(participantsArray, round) {
 
 // Function to show the winner
 function showWinner(winner) {
+    console.log('zwyciezca: ' + winner);
     var bracketContainer = document.querySelector('.bracket-section');
     var winnerContainer = document.createElement('div');
     winnerContainer.classList.add('round');
@@ -341,19 +350,22 @@ function showWinner(winner) {
 }
 
 function getRandomOpponent() {
-    console.log('losuje przeciwnika z globalnej participantsArray: ' + participantsArray.toString());
-    console.log('check przeciwnika z selectedTeams: ' + selectedTeams.toString());
-    if (participantsArray.length === 0) {
-        // Wszyscy uczestnicy zostali już wylosowani, zwróć null lub podejmij odpowiednie działanie
-        participantsArray = selectedTeams;
+    var participantArrayCopy = participantsArray.slice();
+    // console.log('losuje przeciwnika z kopii globalnej participantsArray: ' + participantArrayCopy.toString());
+    // console.log('globalna participantsArray: ' + participantsArray.toString());
+    // console.log('check przeciwnika z selectedTeams: ' + selectedTeams.toString());
+
+    //safety trigger
+    if (participantArrayCopy.length === 0) {
+        participantArrayCopy = selectedTeams.slice();
     }
 
     // Randomly select an opponent from the remaining participants
-    var randomIndex = Math.floor(Math.random() * participantsArray.length);
-    var selectedOpponent = participantsArray[randomIndex];
+    var randomIndex = Math.floor(Math.random() * participantArrayCopy.length);
+    var selectedOpponent = participantArrayCopy[randomIndex];
 
     // Remove the selected participant from the array
-    participantsArray.splice(randomIndex, 1);
+    participantArrayCopy.splice(randomIndex, 1);
 
     return selectedOpponent;
 }
