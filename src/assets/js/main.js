@@ -88,12 +88,9 @@ var numberOfPlayers;
 function validateForm() {
     console.log('walidacja formularza...');
 
-    var tournamentName = document.getElementById('tournamentName').value;
     var participantList = document.getElementById('participantList').value;
-    var tournamentDate = document.getElementById('startDate').value;
     
     //create array of participant list
-    
     participantsArray = participantList.split(',').map(function (participant) {
         return participant.trim();
     });
@@ -116,29 +113,6 @@ function validateForm() {
     // save info about turnament
     saveFormDataToLocalStorage();
 
-    //set info about tournament
-    var tournamentInfoContainer = document.getElementById('tournamentInfo');
-
-    console.log('pokazuje info o turnieju');
-    tournamentInfoContainer.style.display = 'flex';
-
-    console.log(tournamentInfoContainer);
-
-    if (tournamentInfoContainer == undefined) {
-        console.error('div tournamentInfo undefined');
-    } else {
-
-        var tournamentInfoName = document.createElement('h2');
-        tournamentInfoName.innerHTML =  tournamentName;
-        
-        var tournamentInfoDate = document.createElement('p');
-        tournamentInfoDate.innerHTML = tournamentDate;
-
-        tournamentInfoContainer.innerHTML = '';
-
-        tournamentInfoContainer.appendChild(tournamentInfoName);
-        tournamentInfoContainer.appendChild(tournamentInfoDate);
-    }
 
     var bracketSection = document.querySelector('.bracket-section');
     bracketSection.style.display = 'flex';
@@ -154,7 +128,32 @@ function submitForm() {
     if (formSubmitted) {
         console.log('walidacja ok');
 
-        clearBracket();
+        //set info about tournament
+        var tournamentName = document.getElementById('tournamentName').value;
+        var tournamentDate = document.getElementById('startDate').value;
+        var tournamentInfoContainer = document.getElementById('tournamentInfo');
+
+        console.log('pokazuje info o turnieju');
+        tournamentInfoContainer.style.display = 'flex';
+
+        console.log(tournamentInfoContainer);
+
+        if (tournamentInfoContainer == undefined) {
+            console.error('div tournamentInfo undefined');
+        } else {
+
+            var tournamentInfoName = document.createElement('h2');
+            tournamentInfoName.innerHTML =  tournamentName;
+            
+            var tournamentInfoDate = document.createElement('p');
+            tournamentInfoDate.innerHTML = tournamentDate;
+
+            tournamentInfoContainer.innerHTML = '';
+
+            tournamentInfoContainer.appendChild(tournamentInfoName);
+            tournamentInfoContainer.appendChild(tournamentInfoDate);
+        }
+
 
         //validation ok - generate brackets
         generateBracket();
@@ -388,9 +387,8 @@ function clearBracket(){
     var bracketContainer = document.querySelector('.bracket-section');
     bracketContainer.innerHTML = '';
 
-    //clear tournament info section
-    var tournamentInfoContainer2 = document.getElementById('tournamentInfo');
-    tournamentInfoContainer2.innerHTML = '';
+    window.caches.clear;
+    window.location.reload();
 
     //reset information
     selectedTeams = [];
