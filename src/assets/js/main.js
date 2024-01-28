@@ -82,6 +82,7 @@ function fixDuplicateTeams(participantsArray) {
 
 //global info about teams
 var participantsArray;
+var participantArrayCopy;
 var numberOfPlayers;
 // validate form
 function validateForm() {
@@ -194,6 +195,9 @@ function generateBracket() {
     if (participantsArray.length <= 2){
         isFinalRound = true;
     }
+
+    participantArrayCopy = structuredClone(participantsArray);
+
     generateRound(participantsArray, roundCounter);
 
     //listener for radio changes
@@ -250,6 +254,8 @@ function generateNextRound() {
     console.log('zwyciezcy poprzedniej z selectedTeams: ' + selectedTeams);
     console.log('zawartosc globalnej participantsArray: ' + participantsArray);
 
+    participantArrayCopy = structuredClone(selectedTeams);
+
     // console.log('check pierwszego warunku:' + selectedTeams.length + ' > ' + 0 + ' && ' + selectedTeams.length + ' === ' + participantsArray.length / 2);
 
     //check if we have winners
@@ -294,7 +300,7 @@ function generateNextRound() {
 // Function to generate a specific round
 function generateRound(participantsArray, round) {
     console.log('generuje runde');
-    // console.log('zawodnicy z poprzedniej w generateRound: ' + participantsArray.toString());
+    console.log('zawodnicy z poprzedniej w generateRound: ' + participantsArray.toString());
     var bracketContainer = document.querySelector('.bracket-section');
 
     var roundContainer = document.createElement('div');
@@ -309,8 +315,8 @@ function generateRound(participantsArray, round) {
         var matchContainer = document.createElement('div');
         matchContainer.classList.add('bracket-container', 'match');
 
-        var team1 = getRandomOpponent();
-        var team2 = getRandomOpponent();
+        var team1 = getRandomOpponent(participantArrayCopy);
+        var team2 = getRandomOpponent(participantArrayCopy);
 
         // console.log('randomowo dobierani przeciwnicy: ' + team1 + ' ' + team2);
 
@@ -356,9 +362,8 @@ function showWinner(winner) {
 }
 
 //select random opponent from the copy of global array and remove it after choosing
-function getRandomOpponent() {
-    var participantArrayCopy = participantsArray.slice();
-    // console.log('losuje przeciwnika z kopii globalnej participantsArray: ' + participantArrayCopy.toString());
+function getRandomOpponent(participantArrayCopy) {
+    // console.log('losuje przeciwnika z kopii participantsArray: ' + participantArrayCopy);
     // console.log('globalna participantsArray: ' + participantsArray.toString());
     // console.log('check przeciwnika z selectedTeams: ' + selectedTeams.toString());
 
@@ -367,18 +372,17 @@ function getRandomOpponent() {
         participantArrayCopy = selectedTeams.slice();
     }
 
-    // Randomly select an opponent from the remaining participants
-    var randomIndex = Math.floor(Math.random() * participantArrayCopy.length);
-    var selectedOpponent = participantArrayCopy[randomIndex];
+    const randomIndex = Math.floor(Math.random() * participantArrayCopy.length);
+    const selectedOpponent = participantArrayCopy.splice(randomIndex, 1)[0];
 
-    // Remove the selected participant from the array
-    participantArrayCopy.splice(randomIndex, 1);
+    // console.log('selectedOpponent: ' + selectedOpponent);
+    // console.log('randomIndex: ' + randomIndex);
 
     return selectedOpponent;
 }
 
 function clearBracket(){
-    console.log('Clearing bracket and turnament info');
+    console.log('czyszcze info o turnieju');
 
     //clear the bracket section
     var bracketContainer = document.querySelector('.bracket-section');
