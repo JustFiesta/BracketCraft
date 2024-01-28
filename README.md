@@ -39,3 +39,4 @@ Done with Model-View-Controller (MVC) kept in mind. Even though it is overkill f
 * I don't like JS
 * degubbing JS
 * working with JS
+* how creating docs is made for apps
