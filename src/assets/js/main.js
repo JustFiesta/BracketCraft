@@ -1,3 +1,6 @@
+/**
+ * Save form data to local storage.
+ */
 // save form data to local storage
 function saveFormDataToLocalStorage() {
     var formData = {
@@ -11,6 +14,9 @@ function saveFormDataToLocalStorage() {
     console.log('Form data saved to localStorage:', formData);
 }
 
+/**
+ * Load form data from local storage.
+ */
 function loadFormDataFromLocalStorage() {
     var formDataString = localStorage.getItem('formData');
     if (formDataString) {
@@ -25,6 +31,9 @@ function loadFormDataFromLocalStorage() {
     }
 }
 
+/**
+ * Show or hide the form based on its current state.
+ */
 // Show form
 function toggleForm() {
     var form = document.getElementById('tournamentForm');
@@ -41,6 +50,9 @@ function toggleForm() {
     // console.log('otwieranie formularza');
 }
 
+/**
+ * Close the form and hide it.
+ */
 // Close form
 function hideForm() {
     var form = document.getElementById('tournamentForm');
@@ -60,6 +72,10 @@ function hideForm() {
     // console.log('zamykanie formularza');
 }
 
+/**
+ * Check for team name duplication and fix it.
+ * @param {string[]} participantsArray - Array of team names.
+ */
 //check for team name duplication and fix it
 function fixDuplicateTeams(participantsArray) {
     console.log('sprawdzenie duplikatów nazw');
@@ -84,6 +100,11 @@ function fixDuplicateTeams(participantsArray) {
 var participantsArray;
 var participantArrayCopy;
 var numberOfPlayers;
+
+/**
+ * Validate the form data and show the brackets if validation is successful.
+ * @returns {boolean} - Returns true if the form is successfully validated.
+ */
 // validate form
 function validateForm() {
     console.log('walidacja formularza...');
@@ -122,6 +143,9 @@ function validateForm() {
     return true;
 }
 
+/**
+ * Submit the form, generate brackets, and display tournament information.
+ */
 // Submit form
 function submitForm() {
     var formSubmitted = validateForm();
@@ -187,6 +211,10 @@ var isFinalRound = false;
 
 var roundCounter = 1;
 
+/**
+ * Generate the tournament brackets based on the provided participantsArray.
+ * If the number of participants is less than or equal to 2, it sets isFinalRound to true.
+ */
 //generate brackets
 function generateBracket() {
 
@@ -247,6 +275,9 @@ function generateBracket() {
     });
 }
 
+/**
+ * Generate the next round of the tournament brackets.
+ */
 // Function to generate the next round 
 function generateNextRound() {
     console.log('generuje następną runde: ' + roundCounter);
@@ -296,6 +327,11 @@ function generateNextRound() {
     selectedTeams = [];
 }
 
+/**
+ * Generate a specific round of the tournament brackets.
+ * @param {string[]} participantsArray - Array of team names for the current round.
+ * @param {number} round - The current round number.
+ */
 // Function to generate a specific round
 function generateRound(participantsArray, round) {
     console.log('generuje runde');
@@ -343,6 +379,10 @@ function generateRound(participantsArray, round) {
     roundCounter++;
 }
 
+/**
+ * Show the winner of the tournament.
+ * @param {string} winner - The name of the winning team.
+ */
 // Function to show the winner
 function showWinner(winner) {
     console.log('zwyciezca: ' + winner);
@@ -360,6 +400,11 @@ function showWinner(winner) {
     bracketContainer.appendChild(winnerContainer);
 }
 
+/**
+ * Select a random opponent from the copy of the global array and remove it after choosing.
+ * @param {string[]} participantArrayCopy - Copy of the global array of team names.
+ * @returns {string} - The selected opponent.
+ */
 //select random opponent from the copy of global array and remove it after choosing
 function getRandomOpponent(participantArrayCopy) {
     // console.log('losuje przeciwnika z kopii participantsArray: ' + participantArrayCopy);
@@ -380,6 +425,9 @@ function getRandomOpponent(participantArrayCopy) {
     return selectedOpponent;
 }
 
+/**
+ * Clear the tournament bracket and reset related information.
+ */
 function clearBracket(){
     console.log('czyszcze info o turnieju');
 
@@ -396,6 +444,9 @@ function clearBracket(){
     roundCounter = 1;
 }
 
+/**
+ * Event listener when the DOM content is loaded.
+ */
 document.addEventListener('DOMContentLoaded', function () {
     // Load form data from local storage
     loadFormDataFromLocalStorage();
