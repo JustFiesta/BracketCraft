@@ -1,3 +1,15 @@
+
+/**
+    Animacja karuzeli
+
+    Animacja dla kontenera ze zdjeciami. Ustawiona by imitować karuzelę
+
+    .image-group                       - ustawienia głównego kontenera na karuzelę
+    .image-group .image-with-text      - wyświetlanie zdjęć
+    @keyframes slideImages             - animacja karuzeli
+
+    Styleguide 6.0
+ */
 .image-group {
     display: flex;
     overflow: hidden;

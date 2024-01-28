@@ -1,5 +1,19 @@
 /* colors: #f1fafc - tło,  #00315e - prowadzący kolor (fonty, headery),#ee351c - akcenty (guziki, logo)*/
 
+/**
+    Ustawienia globalne
+
+    Ustawienia podstawowe znaczników. Zerowanie ustawień domyślnych.
+
+    * *                                 - Ustawia czcionkę, efekt smooth scroll oraz odstępy liter.
+    body, h1, p, ul, li, form, button - Zerowanie marginesów oraz paddingów dla głównych elemenów.
+    body                              - Ustawienie odpowiednich wartości pozycjonowania za pomocą flexboxa.
+    h2                                - Kolor czcionki oraz marginesy dolne.
+    p                                 - Kolor czcionki, wielkość czcionki.
+    li                                - Kolor czcionki.
+
+    Styleguide 1.0
+ */
 *{
     font-family: 'Roboto', sans-serif;
     scroll-behavior: smooth;
@@ -20,6 +34,34 @@ body {
     align-items: center;
 }
 
+ h2 {
+    color: #334252;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #506174;
+    font-size: 25px;
+    line-height: 1.5;
+}
+
+li{
+    color: #334252;
+}
+
+/**
+    Nagłówek
+
+    Ostylowanie sekcji nagłówka i jej elementów.
+ 
+    header                      - Ustawienie kolorów, wymiaru czcionki, marginesów paddingów, itd. Dodatkowo pozycjonowanie kontenera nagłówkowego zawsze na górze strony, niezależnie od widoku. Dodanie małego cienia na dole konterena tworząc głębię.
+    header h1                   - Pozycjonowanie zawsze na środku
+    header button               - Pozycjonowanie zawsze po lewej stronie. Ustawienie odpowiednich kolorów, paddingów, marginesów, itd.
+    header a                    - Pozycjonowanie zawsze po prawej stronie. Dodanie małej animacji.
+    a:hover                     - style transformacji do animacji
+
+    Styleguide 2.0
+ */
 header {
     background-color: #00315e;
     color: #e9ecef;
@@ -30,7 +72,7 @@ header {
     width: 100%; 
     top: 0; 
     z-index: 1000; 
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0px 2px 5px 5px rgba(0, 0, 0, 0.2); 
     display: flex;
     align-items: center;
 }
@@ -65,36 +107,34 @@ header a:hover{
     transform: translateY(-5px);
 }
 
-.page-description {
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #f1fafc;
-}
+/**
+    Główny kontener
 
-h2 {
-    color: #334252;
-    margin-bottom: 10px;
-}
+    Kontener - rodzic. W nim znajduje się cała treść strony.
 
-p {
-    color: #506174;
-    font-size: 25px;
-    line-height: 1.5;
-}
+    .content                        - Ustawienia wielkości czcionki relatywnie w całym kontenerze głowny. Ustawienie szerokości względnie od wyświetlania na danym urządzeniu.
 
-li{
-    color: #334252;
-}
 
+    Styleguide 3.0
+ */
 .content {
     font-size: 150%;
     margin-top: 60px;
     flex: 1;
     width: 70vw;
 }
+/**
+    Karuzela
 
+    Kontener z ruchomymi zdjęciami - tzw. karuzelą.
 
+    .complex-layout             - ustawienia flexboxa
+    .image-with-text            - ustawienia kontenera zawierającego pojedyńcze zdjęcie
+    .image-with-text img        - ustawienia szerokości i wysokości zdjęć
+    .text-overlay               - kolor czcionki na zdjęciach, tło, wyświetlanie tekstu na zdjęciu
+    
+    Styleguide 3.2.
+ */
 .complex-layout {
     display: flex;
     justify-content: space-between;
@@ -124,28 +164,31 @@ li{
     z-index: 1;
 }
 
+/**
+    Powitanie i opis strony
 
-.icons {
-    display: flex;
-    justify-content: center;
+    .page-description           - Centrowanie, marginesy, paddingi oraz kolor tła dla głównego kontenera.
+    
+    Styleguide 3.1
+ */
+ .page-description {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f1fafc;
 }
+/**
+    Założenia strony
+ 
+    Sekcja zawierająca powitanie i krótki opis strony
 
-.icons div {
-    width: 50px;
-    height: 50px;
-    background-color: transparent;
-    margin-right: 10px;
-}
+    .site-purpose               - główny kontener założeń i jego ostylowanie
+    .site-purpose ul            - usunięcie domyślnych ustawień listy
+    .site-purpose li            - margines dla elementu listy
+    .site-purpose li::before    - pseudoelement w kształcie kropki o określonych wymiarach i kolorze
 
-@keyframes bounce {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-10px);
-    }
-}
-
+    Styleguide 3.3
+ */
 .site-purpose {
     text-align: center;
     padding: 20px 20px 0px 20px;
@@ -171,22 +214,51 @@ li{
     margin-left: -1em;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
+/**
+    Formularz drabinek
+
+    Kontener na wysuwany formularz, zbierający dane o turnieju i jego uczestnikach.
+
+    .complex-form                                                                         - główny kontener formularza. Centrowanie, marginesy, czcionka i kolory + animacja wysuwania i chowania
+    .complex-form label                                                                   - stylowanie labelów w formularzu. Wyświeltanie blokowe, pogrubienie, kolor czcionki
+    .complex-form input,.complex-form select,.complex-form textarea                       - ustawienia wyświetlania elementów formularza 
+    .complex-form button                                                                  - pociemnienie guzików, i inne style guzików formularza
+    .complex-form button:hover, header button:hover, #collapseFormButton:hover            - animacje najechania na guzik
+    .complex-form .form-group                                                             - flexbox i marginesy dla lepszego widoku formularza
+    .complex-form .form-group label                                                       - margines po labelu
+    @keyframes expandForm                                                                 - animacja rozwijania formularza
+    @keyframes collapseForm                                                               - animacja zwijania formularza
+    .expanded                                                                             - klasa z animacją rozwijania                                        
+    .collapsed                                                                            - klasa z animacją zwijania
+    .complex-form.expanded                                                                - klasa do dodania animacji przez Javascript do rozwijania formularza
+    .complex-form:not(.expanded)                                                          - klasa do dodania animacji przez Javascript do zwijania formularza
+    .button,#collapseFormButton                                                           - usunięcie obramowania, zaokrąglenie guzika, zmiana kursora
+    .button,#collapseFormButton,.complex-form button                                      - kolor czcionki guzików, mała animacja
+    #submitFormButton                                                                     - jaśniejszy kolor głównego guzika
+    #collapseFormButton:hover,.complex-form button:hover                                  - powiększenie guzika i rozjaśnienie czcionki po najechaniu kursorem
+    .form-buttons                                                                         - centrowanie guzików w formularzu
+    .form-buttons button                                                                  - przyciemnienie pozostałych guzików
+    .complex-form button                                                                  - główne ustawienia guzików formularza
+    .complex-form .form-group                                                             - centrowanie guzików formularza
+
+    Styleguide 3.4
+ */
 
 .complex-form {
+    color: #e9ecef;
     margin-top: 20px;
     margin-bottom: 20px;
-    max-width: 60%; 
+    max-width: 100%; 
     margin-left: auto;
     margin-right: auto;
     display: none;
     transition: max-width 0.3s, margin-top 0.3s; 
-    border: 1px solid #ccc; 
+    border: 1px solid #00315e;
     border-radius: 8px; 
-    background-color: #e9ecef; 
-    padding: 20px;
+    background-color: #dceefc; 
+    padding: 10px;
+
+    box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.2); ;
 
     animation-duration: 0.5s;
     animation-timing-function: ease-out;
@@ -222,13 +294,6 @@ li{
     font-size: medium;
 }
 
-.complex-form {
-    background-color: #eef5fa;
-    color: #e9ecef;
-    padding: 10px;
-    border: 2px solid slate;
-}
-
 .complex-form button:hover, header button:hover, #collapseFormButton:hover {
     background-color: #d3301a;
     color: #fff;
@@ -242,37 +307,6 @@ li{
 
 .complex-form .form-group label {
     margin-bottom: 5px;
-}
-
-.complex-form .form-group input,
-.complex-form .form-group select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px; 
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-
-.complex-form .form-group .short-inputs {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-
-.complex-form .form-group .short-inputs input,
-.complex-form .form-group .short-inputs select {
-    flex: 1; 
-}
-
-.complex-form .form-group .short-inputs select {
-    flex: 2; 
-    width: auto;
-}
-
-.complex-form .form-group button {
-    width: 100px;
 }
 
 @keyframes expandForm {
@@ -328,22 +362,6 @@ li{
     animation-name: collapseForm;
 }
 
-.slider {
-    margin-top: 20px;
-    overflow: hidden;
-}
-
-.slider img {
-    width: 100%;
-    height: auto;
-}
-
-.div-with-scroll {
-    overflow-y: auto;
-    max-height: 200px;
-    margin-top: 20px;
-}
-
 button,
 #collapseFormButton {
     border: none;
@@ -374,6 +392,8 @@ button,
 
 .form-buttons {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-buttons button {
@@ -397,6 +417,25 @@ button,
     justify-content: space-between;
 }
 
+/**
+    Turniej
+
+    Sekcja zawierająca dynamicznie generowanie informacje o turnieju i drabinki turniejowe.
+
+    .bracket-section             - ostylowanie kontenera zawierającego cały turniej
+    #tournamentInfo              - dynamicznie wstawiane informacje o turnieju
+    .round                       - pojedyńcza runda drabinki turniejowej 
+    .bracket-container           - pojedyńczy mecz drabinki turniejowej - używana w JavaScript do identyfikacji rund
+    .match                       - szerokość meczu
+    .player                      - stylowanie nazwy gracza w rundzie                
+    .divider                     - linia oddzielająca graczy w meczu
+    .winner                      - kontener dynamicznie wstawiany, pokazujący zwycięzce turnieju
+    .bracket-container.winner    - usunięcie innych klas dziedziczonych z modułu rundy
+    .winner p                    - kolor tekstu z nazwą zwycięzcy
+    @keyframes rotateBorder      - animacja obramowania zwycięzcy
+
+    Styleguide 3.5.
+ */
 .bracket-section {
     display: none;
     overflow: scroll;
@@ -410,6 +449,13 @@ button,
     flex-direction: column;
 }
 
+.round{
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .bracket-container {
     display: flex;
     align-items: center;
@@ -419,12 +465,6 @@ button,
     padding: 10px 0px 10px 0px;
     margin-bottom: 10px;
     color: #555;
-}
-.round{
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .match {
@@ -438,11 +478,6 @@ button,
     display: flex;
     flex: 1;
     justify-content: space-between;
-}
-
-.player p {
-    margin: 10px;
-    padding: 5px;
 }
 
 .divider {
@@ -478,6 +513,10 @@ button,
     animation: rotateBorder 2s ease-in-out infinite;
 }
 
+.winner p {
+    color: #41d459;
+}
+
 @keyframes rotateBorder {
     0% {
         border-image-source: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
@@ -499,17 +538,17 @@ button,
     }
 }
 
-.winner p {
-    color: #41d459;
-}
+/**
+    Stopka
 
-.winner-radio {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    Ustawienia kontenera stopki, zawierającego odnośniki ze zdjęciami do socialmediów.
 
+    footer      - główny kontener zawierający stopkę. Pozycjonowany zawsze na samym dole strony.
+    .icons      - flexbox dla ikon
+    .icons div  - ustawienia kontenerów na linki
+
+    Styleguide 4.0
+ */
 footer {
     margin-top: 10px;
     background-color: #00315e;
@@ -518,4 +557,16 @@ footer {
     text-align: center;
     bottom: 0;
     width: 100%;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+}
+
+.icons div {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    margin-right: 10px;
 }

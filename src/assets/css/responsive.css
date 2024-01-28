@@ -1,9 +1,27 @@
-/* responsive.css */
+/**
+    Media queries
 
+    Zmiana wyświetlania treści dla małych urządzeń
+
+    body                                                                                                    - globalna zmiana wielkości czcionki w body
+    header h1                                                                                               - zmiana wielkości h1                          
+    header button                                                                                           - zmiana wielkości guzika
+    section p, li, ul                                                                                       - mała czionka dynamiczna
+    .page-description,.site-purpose,.form-group label,.form-buttons button,.bracket-section h2,.player p    - sztywna czcionka dla nagłówków i ważnych elementów
+    .content                                                                                                - zmiana szerokości wyświetlania treści                                                                                           - 
+    .image-group                                                                                            - zmiana szerokości zdjęć w karuzeli
+    .image-group .image-with-text                                                                           - zmiana ustawień flexboxa dla karuzeli
+    .complex-form                                                                                           - zmiana szerokości formularza
+    .form-buttons button                                                                                    - zmiejszenie czcionki guzików formularza
+    #submitFormButton, #clearFormButton, #collapseFormButton                                                - zmiejszenie marginesów i paddingó guzików formularza
+    .match                                                                                                  - zwięszkenie pojedyńczego konteneru meczu
+    .divider                                                                                                - poszerzenie linii oddzielającej zawodników
+    .match label                                                                                            - zmiejszenie nazwy zawodników
+
+    Styleguide 5.0
+ */
 @media screen and (max-width: 700px) {
-    .content {
-        width: 100vw;
-    }
+
     body {
         font-size: 10px;
     }
@@ -17,6 +35,10 @@
         padding: 10px;
     }
 
+    section p, li, ul {
+        font-size: small;
+    }
+
     .page-description,
     .site-purpose,
     .form-group label,
@@ -25,6 +47,11 @@
     .player p {
         font-size: 16px;
     }
+
+    .content {
+        width: 100vw;
+    }
+
     .image-group {
         width: 100%; 
     }
@@ -33,9 +60,6 @@
         flex: 0 0 100%; 
     }
 
-    section p, li, ul {
-        font-size: small;
-    }
     .complex-form { 
         max-width: 90%;
         margin: auto;
@@ -51,9 +75,11 @@
     .match {
         width: 25vw;
     }
+
     .divider {
         width: 100%;
     }
+
     .match label {
         font-size: smaller;
     }
