@@ -212,12 +212,16 @@ function generateBracket() {
             if (event.target.checked) {
                 console.log('dodanie druzyny: ' + selectedTeam);
                 selectedTeams.push(selectedTeam);
+
+                    //disable all other radiobuttons in the same match
+                var matchRadios = event.target.closest('.match').querySelectorAll('input[type="radio"]');
+                matchRadios.forEach(function (radio) {
+                    if (radio !== event.target) {
+                        radio.disabled = true;
+                    }
+                });
             }
-            //... and delete not choosed one if it is in array
-            var indexOfUnselectedTeam = selectedTeams.indexOf(unselectedTeam);
-            if (indexOfUnselectedTeam !== -1) {
-                selectedTeams.splice(indexOfUnselectedTeam, 1);
-            }
+
             console.log('tabela wygranych druzyn: ' + selectedTeams);
             console.log('tabela globalna druzyn: ' + participantsArray);
 
