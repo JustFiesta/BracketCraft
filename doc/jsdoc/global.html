@@ -104,7 +104,7 @@
     
 
     
-    <h4 class="name" id="clearBracket"><span class="type-signature"></span>clearBracket<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="clearBracket"><span class="type-signature"></span>clearBracket<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -112,7 +112,7 @@
 
 
 <div class="description">
-    Clear the tournament bracket and reset related information.
+    Wykonuje następujące czynności:1. Wypisuje komunikat "czyszcze info o turnieju" na konsoli.2. Pobiera element DOM o klasie `.bracket-section` i czyści jego zawartość.3. Próbuje oczyścić dane w cache przeglądarki (potencjalnie błąd w kodzie).4. Przeładowuje bieżącą stronę w celu odświeżenia zawartości.5. Resetuje tablicę `selectedTeams` do pustej tablicy.6. Ustawia zmienną `isFinalRound` na `false`.7. Resetuje zmienną `roundCounter` na 1.
 </div>
 
 
@@ -156,7 +156,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line431">line 431</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line465">line 465</a>
     </li></ul></dd>
     
 
@@ -181,6 +181,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -192,7 +210,7 @@
     
 
     
-    <h4 class="name" id="fixDuplicateTeams"><span class="type-signature"></span>fixDuplicateTeams<span class="signature">(participantsArray)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="fixDuplicateTeams"><span class="type-signature"></span>fixDuplicateTeams<span class="signature">(participantsArray)</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -200,7 +218,7 @@
 
 
 <div class="description">
-    Check for team name duplication and fix it.
+    Wykonuje następujące czynności:1. Wypisuje komunikat "sprawdzenie duplikatów nazw" na konsoli.2. Inicjalizuje obiekt `teamCount` do przechowywania liczby wystąpień każdej nazwy drużyny.3. Iteruje przez tablicę uczestników (`participantsArray`) i sprawdza duplikaty nazw drużyn.   a. Jeśli drużyna już wystąpiła, zwiększa licznik i dodaje numer do jej nazwy.   b. Jeśli drużyna występuje po raz pierwszy, ustawia jej licznik na 1.
 </div>
 
 
@@ -252,7 +270,7 @@
 
             
 
-            <td class="description last">Array of team names.</td>
+            <td class="description last">Tablica uczestników, w której usuwane są duplikaty nazw drużyn.</td>
         </tr>
 
     
@@ -293,7 +311,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line80">line 80</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -318,6 +336,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -381,7 +417,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line219">line 219</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line256">line 256</a>
     </li></ul></dd>
     
 
@@ -469,7 +505,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line282">line 282</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -629,7 +665,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line336">line 336</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line373">line 373</a>
     </li></ul></dd>
     
 
@@ -766,7 +802,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line409">line 409</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line446">line 446</a>
     </li></ul></dd>
     
 
@@ -824,7 +860,7 @@
     
 
     
-    <h4 class="name" id="hideForm"><span class="type-signature"></span>hideForm<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="hideForm"><span class="type-signature"></span>hideForm<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -832,7 +868,7 @@
 
 
 <div class="description">
-    Close the form and hide it.
+    Wykonuje następujące czynności:1. Pobiera referencje do elementów HTML: formularza (`form`) i przycisku zwijania formularza (`collapseButton`).2. Dodaje klasę `collapsed` do formularza, usuwa klasę `expanded`.3. Ustawia opóźnione wywołanie funkcji:   a. Ustawienie stylu `display` na 'none' dla przycisku zwijania formularza i samego formularza po 500 ms.   b. Usunięcie klasy `collapsed` z formularza.4. Zapisuje wartość 'false' w lokalnym magazynie (`localStorage`) pod kluczem 'formVisible'.
 </div>
 
 
@@ -876,7 +912,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line57">line 57</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -901,6 +937,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1101,7 +1155,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line387">line 387</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line424">line 424</a>
     </li></ul></dd>
     
 
@@ -1189,7 +1243,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line150">line 150</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line187">line 187</a>
     </li></ul></dd>
     
 
@@ -1225,7 +1279,7 @@
     
 
     
-    <h4 class="name" id="toggleForm"><span class="type-signature"></span>toggleForm<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="toggleForm"><span class="type-signature"></span>toggleForm<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -1233,7 +1287,7 @@
 
 
 <div class="description">
-    Show or hide the form based on its current state.
+    Wykonuje następujące czynności:1. Pobiera referencje do elementów HTML: formularza (`form`) i przycisku zwijania formularza (`collapseButton`).2. Sprawdza, czy formularz jest ukryty:   a. Jeśli tak, ustawia styl `display` na 'block' dla przycisku i formularza, przewija do formularza z efektem smooth, dodaje klasę `expanded`.   b. Zapisuje wartość 'true' w lokalnym magazynie (`localStorage`) pod kluczem 'formVisible'.3. Komentarz: zakomentowano, ponieważ nie jest używany, a nie ma potrzeby wypisywania w konsoli.
 </div>
 
 
@@ -1277,7 +1331,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line38">line 38</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -1302,6 +1356,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1365,7 +1437,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line109">line 109</a>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -1439,7 +1511,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jan 28 2024 18:39:03 GMT+0100 (czas środkowoeuropejski standardowy)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Jan 30 2024 15:21:26 GMT+0100 (czas środkowoeuropejski standardowy)
 </footer>
 
 <script> prettyPrint(); </script>

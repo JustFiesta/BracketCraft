@@ -32,7 +32,19 @@ function loadFormDataFromLocalStorage() {
 }
 
 /**
- * Show or hide the form based on its current state.
+ * Funkcja przełączająca widoczność formularza turnieju.
+ * @function
+ * @name toggleForm
+ * 
+ * @description
+ * Wykonuje następujące czynności:
+ * 1. Pobiera referencje do elementów HTML: formularza (`form`) i przycisku zwijania formularza (`collapseButton`).
+ * 2. Sprawdza, czy formularz jest ukryty:
+ *    a. Jeśli tak, ustawia styl `display` na 'block' dla przycisku i formularza, przewija do formularza z efektem smooth, dodaje klasę `expanded`.
+ *    b. Zapisuje wartość 'true' w lokalnym magazynie (`localStorage`) pod kluczem 'formVisible'.
+ * 3. Komentarz: zakomentowano, ponieważ nie jest używany, a nie ma potrzeby wypisywania w konsoli.
+ * 
+ * @returns {void}
  */
 // Show form
 function toggleForm() {
@@ -51,7 +63,20 @@ function toggleForm() {
 }
 
 /**
- * Close the form and hide it.
+ * Funkcja ukrywająca formularz turnieju.
+ * @function
+ * @name hideForm
+ * 
+ * @description
+ * Wykonuje następujące czynności:
+ * 1. Pobiera referencje do elementów HTML: formularza (`form`) i przycisku zwijania formularza (`collapseButton`).
+ * 2. Dodaje klasę `collapsed` do formularza, usuwa klasę `expanded`.
+ * 3. Ustawia opóźnione wywołanie funkcji:
+ *    a. Ustawienie stylu `display` na 'none' dla przycisku zwijania formularza i samego formularza po 500 ms.
+ *    b. Usunięcie klasy `collapsed` z formularza.
+ * 4. Zapisuje wartość 'false' w lokalnym magazynie (`localStorage`) pod kluczem 'formVisible'.
+ * 
+ * @returns {void}
  */
 // Close form
 function hideForm() {
@@ -73,8 +98,20 @@ function hideForm() {
 }
 
 /**
- * Check for team name duplication and fix it.
- * @param {string[]} participantsArray - Array of team names.
+ * Funkcja usuwająca duplikaty nazw drużyn w tablicy uczestników.
+ * @function
+ * @name fixDuplicateTeams
+ * 
+ * @description
+ * Wykonuje następujące czynności:
+ * 1. Wypisuje komunikat "sprawdzenie duplikatów nazw" na konsoli.
+ * 2. Inicjalizuje obiekt `teamCount` do przechowywania liczby wystąpień każdej nazwy drużyny.
+ * 3. Iteruje przez tablicę uczestników (`participantsArray`) i sprawdza duplikaty nazw drużyn.
+ *    a. Jeśli drużyna już wystąpiła, zwiększa licznik i dodaje numer do jej nazwy.
+ *    b. Jeśli drużyna występuje po raz pierwszy, ustawia jej licznik na 1.
+ * 
+ * @param {string[]} participantsArray - Tablica uczestników, w której usuwane są duplikaty nazw drużyn.
+ * @returns {void}
  */
 //check for team name duplication and fix it
 function fixDuplicateTeams(participantsArray) {
@@ -426,7 +463,21 @@ function getRandomOpponent(participantArrayCopy) {
 }
 
 /**
- * Clear the tournament bracket and reset related information.
+ * Funkcja czyszcząca informacje o turnieju.
+ * @function
+ * @name clearBracket
+ * 
+ * @description
+ * Wykonuje następujące czynności:
+ * 1. Wypisuje komunikat "czyszcze info o turnieju" na konsoli.
+ * 2. Pobiera element DOM o klasie `.bracket-section` i czyści jego zawartość.
+ * 3. Próbuje oczyścić dane w cache przeglądarki (potencjalnie błąd w kodzie).
+ * 4. Przeładowuje bieżącą stronę w celu odświeżenia zawartości.
+ * 5. Resetuje tablicę `selectedTeams` do pustej tablicy.
+ * 6. Ustawia zmienną `isFinalRound` na `false`.
+ * 7. Resetuje zmienną `roundCounter` na 1.
+ * 
+ * @returns {void}
  */
 function clearBracket(){
     console.log('czyszcze info o turnieju');

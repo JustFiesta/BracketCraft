@@ -53,6 +53,54 @@ li{
     Nagłówek
 
     Ostylowanie sekcji nagłówka i jej elementów.
+
+    Markup:
+    <div>
+        <header>
+            <button onclick="toggleForm()">CREATE</button>
+            <h1>BracketCraft</h1>
+            <a href="#"><img src="/src/assets/images/arrow-up.png" alt="go-up"></a>
+        </header>
+    </div>
+    <style>
+        header {
+            background-color: #00315e;
+            color: #e9ecef;
+            font-size: larger;
+            padding: 20px;
+            text-align: center;
+            width: 100%; 
+            z-index: 1000; 
+            box-shadow: 0px 2px 5px 5px rgba(0, 0, 0, 0.2); 
+            display: flex;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0 auto;
+        }
+        header button {
+            background-color: #ee351c;
+            color: #e9ecef;
+            margin-left: 20px;
+            padding: 20px;
+            font-weight: bolder;
+            font-size: large;
+            border: none;
+            cursor: pointer;
+        }
+        header a{
+            margin: 20px;
+            border: none;
+            cursor: pointer;
+            right: 5px;
+            transition: 0.1s linear;
+        }
+        header a:hover{
+            transition: 0.1s linear;
+            transform: translateY(-5px);
+        }
+    </style>
+
  
     header                      - Ustawienie kolorów, wymiaru czcionki, marginesów paddingów, itd. Dodatkowo pozycjonowanie kontenera nagłówkowego zawsze na górze strony, niezależnie od widoku. Dodanie małego cienia na dole konterena tworząc głębię.
     header h1                   - Pozycjonowanie zawsze na środku
@@ -60,6 +108,7 @@ li{
     header a                    - Pozycjonowanie zawsze po prawej stronie. Dodanie małej animacji.
     a:hover                     - style transformacji do animacji
 
+    
     Styleguide 2.0
  */
 header {
@@ -226,6 +275,182 @@ header a:hover{
     .complex-form button:hover, header button:hover, #collapseFormButton:hover            - animacje najechania na guzik
     .complex-form .form-group                                                             - flexbox i marginesy dla lepszego widoku formularza
     .complex-form .form-group label                                                       - margines po labelu
+ 
+    Markup:
+    <form class="complex-form" id="tournamentForm" onsubmit="submitForm()">
+    <label for="tournamentName">Turnament name</label>
+    <div class="form-group">
+    <input type="text" id="tournamentName" name="tournamentName">
+    </div>
+    <label for="participantList">Participants</label>
+    <div class="form-group">
+    <textarea id="participantList" name="participantList" rows="4" required></textarea>
+    </div>
+    <div class="form-group label-only">   
+    <div class="input-container">
+    <label for="startDate">Date</label>
+    <input type="date" id="startDate" name="startDate">
+    </div>
+    </div>
+    <div class="form-buttons">
+    <button type="button" id="submitFormButton" onclick="submitForm()" >SUBMIT</button>
+    <button type="button" id="clearFormButton" onclick="clearBracket()">CLEAR BRACKET</button>
+    <button type="button" id="collapseFormButton" onclick="hideForm()">CLOSE</button>
+    </div>
+    </form>
+    <style>
+        .complex-form {
+            color: #e9ecef;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            max-width: 60%; 
+            margin-left: auto;
+            margin-right: auto;
+            transition: max-width 0.3s, margin-top 0.3s; 
+            border: 1px solid #00315e;
+            border-radius: 8px; 
+            background-color: #dceefc; 
+            padding: 10px;
+            box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.2); ;
+            animation-duration: 0.5s;
+            animation-timing-function: ease-out;
+            overflow: hidden;
+        }
+        .complex-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold; 
+        }
+        .complex-form input,
+        .complex-form select,
+        .complex-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px; 
+        }
+        .complex-form button {
+            background-color: #ee351c;
+            color: #e9ecef;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto; 
+            font-size: medium;
+        }
+        .complex-form button:hover, header button:hover, #collapseFormButton:hover {
+            background-color: #d3301a;
+            color: #fff;
+        }
+        .complex-form .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        .complex-form .form-group label {
+            margin-bottom: 5px;
+        }
+        @keyframes expandForm {
+            0% {
+                opacity: 0;
+                max-height: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            100% {
+                opacity: 1;
+                max-height: 500px; 
+                margin-top: 20px;
+                margin-bottom: 20px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+        }
+        @keyframes collapseForm {
+            0% {
+                opacity: 1;
+                max-height: 500px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            100% {
+                opacity: 0;
+                max-height: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+        .expanded {
+            animation: expandForm 0.5s ease-out;
+        }
+        .collapsed {
+            animation: collapseForm 0.5s ease-out;
+        }
+        .complex-form.expanded {
+            animation-name: expandForm;
+        }
+        .complex-form:not(.expanded) {
+            animation-name: collapseForm;
+        }
+        button,
+        #collapseFormButton {
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button,
+        #collapseFormButton,
+        .complex-form button {
+            color: #e9ecef;
+            padding: 10px;
+            transition: 0.2s linear;
+        }
+        #submitFormButton {
+            background-color: #ee351c;
+        }
+        #collapseFormButton:hover,
+        .complex-form button:hover {
+            transition: 0.2s linear;
+            background-color: #d3301a;
+            color: #fff;
+            width: 110px;
+            font-weight: bold;
+        }
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-buttons button {
+            background-color:#e65643
+        }
+        .complex-form button {
+            width: 100px;
+            height: 58px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px; 
+            transition: 0.2s linear;
+        }
+        .complex-form .form-group {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 15px;
+            justify-content: space-between;
+        }
+    </style>
+
     @keyframes expandForm                                                                 - animacja rozwijania formularza
     @keyframes collapseForm                                                               - animacja zwijania formularza
     .expanded                                                                             - klasa z animacją rozwijania                                        
@@ -240,6 +465,8 @@ header a:hover{
     .form-buttons button                                                                  - przyciemnienie pozostałych guzików
     .complex-form button                                                                  - główne ustawienia guzików formularza
     .complex-form .form-group                                                             - centrowanie guzików formularza
+
+    
 
     Styleguide 3.4
  */
